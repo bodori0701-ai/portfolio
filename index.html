@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio_Game Marketing Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --off: #f7f6f4;
+  --border: #e4e3e0;
+  --text: #111110;
+  --muted: #999896;
+  --nav-h: 52px;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: 0 36px;
+  gap: 32px;
+  z-index: 100;
+  background: rgba(255,255,255,0.93);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+nav.scrolled { border-bottom-color: var(--border); }
+
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-right: auto;
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+.nav-logo:hover { opacity: 1; }
+
+.nav-tab {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #666;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  border-top: none; border-left: none; border-right: none;
+  transition: color 0.2s, border-color 0.2s;
+  cursor: pointer;
+  background: none;
+  font-family: 'Pretendard', sans-serif;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active { color: #2255ff; border-bottom-color: #2255ff; font-weight: 700; }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; padding-top: var(--nav-h); }
+.page.active { display: block; }
+
+/* ══════════════════════════════
+   PAGE: MAIN_SLIDESHOW
+══════════════════════════════ */
+#page-main {
+  padding-top: 0;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: #0a0a0a;
+}
+
+.slideshow { position: absolute; inset: 0; }
+
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+  overflow: hidden;
+}
+.slide.active { opacity: 1; }
+
+.slide-bg { width:100%; height:100%; object-fit:contain; display:block; background:#000; }
+
+.slide-placeholder {
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+}
+
+.slide:nth-child(1) .slide-placeholder { background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460); }
+.slide:nth-child(2) .slide-placeholder { background:linear-gradient(135deg,#2d1b1b,#4a1942,#1a0a2e); }
+.slide:nth-child(3) .slide-placeholder { background:linear-gradient(135deg,#0a1628,#1e3a5f,#0d2137); }
+.slide:nth-child(4) .slide-placeholder { background:linear-gradient(135deg,#1a2a1a,#2d4a2d,#0f2a0f); }
+.slide:nth-child(5) .slide-placeholder { background:linear-gradient(135deg,#2a1a0a,#4a3520,#1a0d00); }
+.slide:nth-child(6) .slide-placeholder { background:linear-gradient(135deg,#1a0a1a,#3d1a3d,#0a000a); }
+
+.slide-info {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:120px 48px 52px;
+  background:linear-gradient(to top,rgba(0,0,0,0.6),transparent);
+}
+.slide-title {
+  font-family:'Pretendard',sans-serif;
+  font-size:clamp(22px,3vw,40px); font-weight:500;
+  color:#fff; letter-spacing:-0.2px; line-height:1.2;
+  opacity:0; transform:translateY(12px);
+  transition:opacity .8s .4s ease,transform .8s .4s ease;
+}
+.slide.active .slide-title { opacity:1; transform:translateY(0); }
+.slide-tag {
+  font-family:'DM Mono',monospace; font-size:13px;
+  font-weight: 500;
+  letter-spacing:.12em; color:rgba(255,255,255,0.7); text-transform:uppercase;
+  margin-top:8px; opacity:0; transition:opacity .8s .6s ease;
+}
+.slide.active .slide-tag { opacity:1; }
+
+.slide-counter {
+  position:absolute; top:calc(var(--nav-h)+22px); right:40px;
+  font-family:'DM Mono',monospace; font-size:11px;
+  letter-spacing:.1em; color:rgba(255,255,255,0.28); z-index:10;
+}
+
+
+.main-identity { position:absolute; top:calc(var(--nav-h)+24px); left:48px; z-index:10; }
+.main-name { font-family:'Pretendard',sans-serif; font-size:14px; color:#2255ff; font-weight:500; letter-spacing:0.08em; }
+.main-role { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.15em; color:rgba(255,255,255,0.28); text-transform:uppercase; margin-top:4px; }
+
+/* ══════════════════════════════
+   PAGE: PROJECTS_GRID
+══════════════════════════════ */
+#page-projects { background:var(--white); }
+
+.projects-header {
+  padding:40px 36px 32px;
+  border-bottom:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:baseline;
+}
+.projects-title { font-family:'Pretendard',sans-serif; font-size:13px; font-style:italic; color:var(--muted); }
+.projects-count { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--muted); }
+
+/* 그리드 간격 추가, 테두리 제거 */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 80px 24px 24px;
+}
+.project-item {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+}
+.project-thumb {
+  aspect-ratio: 27/14;
+  overflow: hidden;
+  position: relative;
+  background: var(--off);
+}
+.project-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:opacity .35s ease; }
+.project-img.default { opacity:1; z-index:1; }
+.project-img.hover   { opacity:0; z-index:2; }
+.project-item:hover .project-img.default { opacity:1; }
+.project-item:hover .project-img.hover   { opacity:1; }
+
+.ph { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; transition:opacity .35s ease; }
+.ph svg { width:26px; height:26px; stroke:#ccc; fill:none; stroke-width:1; }
+.ph span { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.08em; color:#c8c8c5; }
+.ph-default { background:var(--off); z-index:1; opacity:1; }
+.ph-hover   { background:#ededeb; z-index:2; opacity:0; }
+.project-item:hover .ph-default { opacity:0; }
+.project-item:hover .ph-hover   { opacity:1; }
+
+/* 호버 오버레이_흰색 75% + 타이틀 가운데 */
+.project-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+.project-item:hover .project-hover-overlay {
+  background: rgba(255, 255, 255, 0.75);
+}
+.project-hover-title {
+  font-size: clamp(16px, 2.2vw, 26px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding: 0 16px;
+}
+.project-item:hover .project-hover-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 텍스트 박스 숨김 */
+.project-info { display: none; }
+
+/* ══════════════════════════════
+   PAGE: PROJECT DETAIL
+   레이아웃: 좌측 텍스트 고정 | 우측 이미지 스크롤
+══════════════════════════════ */
+#page-detail { background: var(--white); }
+
+/* 뒤로가기 버튼_네비 바 아래 얇은 띠 */
+.detail-nav-bar {
+  padding: 14px 48px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.detail-back:hover { color: var(--text); }
+.detail-back svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
+
+.detail-breadcrumb {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--border);
+}
+
+.detail-breadcrumb-cur {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* ── 메인 레이아웃: 좌/우 2컬럼 ── */
+.detail-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  min-height: calc(100vh - var(--nav-h) - 45px);
+  align-items: start;
+}
+
+/* 좌측 텍스트 패널_스크롤해도 고정 */
+.detail-left {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding: 48px 40px 48px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  scrollbar-width: none;
+}
+.detail-left::-webkit-scrollbar { display: none; }
+
+/* 프로젝트 장르 태그 */
+.detail-genre-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+/* 프로젝트 이름 */
+.detail-title {
+  font-family: 'Pretendard', sans-serif;
+  font-size: clamp(20px, 2.8vw, 34px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.4px;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+/* 구분선 */
+.detail-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 20px;
+}
+
+/* 텍스트 블록 공통 */
+.detail-text-block {
+  margin-bottom: 20px;
+}
+.detail-text-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: #2255ff;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+.detail-text-body {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.85;
+}
+
+/* 메타 정보 (제작연도 / 결과물 / 참여도) */
+.detail-meta-grid {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+}
+.detail-meta-row {}
+.detail-meta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.detail-meta-val {
+  font-size: 12px;
+  font-weight: 400;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* 우측 이미지 패널 */
+.detail-right {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* 첫 번째 메인 이미지_화면 높이에 맞게 크게 */
+.detail-hero-img {
+  width: 100%;
+  aspect-ratio: 27/14;
+  background: var(--off);
+  overflow: hidden;
+  position: relative;
+}
+.detail-hero-img img { width:100%; height:100%; object-fit:contain; display:block; background:#000; }
+.detail-img-ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: var(--white);
+}
+.detail-img-ph svg { width:32px; height:32px; stroke:#ddd; fill:none; stroke-width:1; }
+.detail-img-ph span { font-family:'DM Mono',monospace; font-size:10px; letter-spacing:.08em; color:#ccc; }
+
+/* 이미지 그룹 섹션들 (스크롤 영역) */
+.detail-groups { padding: 0; margin-top: 64px; }
+
+.detail-group {
+  border-top: 1px solid var(--border);
+  padding: 48px 48px 0 48px;
+  margin-bottom: 0;
+}
+
+/* 그룹 설명 텍스트 */
+.detail-group-desc-wrap {
+  margin-bottom: 24px;
+}
+.detail-group-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.detail-group-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+.detail-group-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.85;
+  max-width: 560px;
+}
+.detail-group-desc .desc-main {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text);
+  font-weight: 400;
+  white-space: normal;
+}
+.detail-group-desc .desc-sub {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  margin-bottom: 3px;
+  line-height: 1.6;
+  padding-left: 4px;
+}
+.detail-group-desc .desc-sub::before {
+  content: "•";
+  font-size: 10px;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* 그룹 캐러셀_가운데 1개 완전히, 양옆 반씩 */
+.detail-group-slider {
+  position: relative;
+  width: 80%;
+  margin: 0 auto 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.detail-group-carousel {
+  overflow: hidden;
+  flex: 1;
+}
+.detail-group-carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+.detail-group-carousel-item {
+  flex-shrink: 0;
+  width: 60%;
+  padding: 0 4px;
+  box-sizing: border-box;
+}
+.detail-group-carousel-item img {
+  width: 100%;
+  height: 400px;
+  object-fit: contain;
+  display: block;
+  background: var(--white);
+}
+.detail-group-grid-ph {
+  aspect-ratio: 1;
+  background: var(--off);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.detail-group-grid-ph svg { width:28px; height:28px; stroke:#ddd; fill:none; stroke-width:1; }
+.detail-group-grid-ph span { font-family:'DM Mono',monospace; font-size:10px; color:#ccc; letter-spacing:.06em; }
+
+/* 화살표_이미지 영역 밖 */
+.slider-btn {
+  flex-shrink: 0;
+  position: static;
+  transform: none;
+  width: 36px; height: 36px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+}
+.slider-btn:hover { background: var(--off); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+.slider-btn svg { width:13px; height:13px; stroke:var(--text); fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.slider-btn.prev, .slider-btn.next { left: auto; right: auto; top: auto; }
+
+.slider-counter {
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+/* ══════════════════════════════
+   PAGE: ABOUT_전면 재설계
+══════════════════════════════ */
+#page-about { background: var(--off); }
+
+/* 전체 about 스크롤 래퍼 */
+.about-wrap { max-width: 1100px; margin: 0 auto; padding: 64px 48px 100px; }
+
+/* ── 섹션 공통 헤더 ── */
+.ab-section { margin-bottom: 72px; }
+.ab-section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 36px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.ab-section-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2255ff;
+}
+.ab-section-title span { color: #2255ff; }
+
+/* ── PROFILE 섹션 ── */
+.ab-profile-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.ab-name-ko {
+  font-family: 'Pretendard', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 2px;
+}
+.ab-name-en {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: #2255ff;
+  margin-bottom: 0;
+}
+.ab-contact-list { margin-top: 28px; display: flex; flex-direction: column; gap: 6px; }
+.ab-contact-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #2a2a2a;
+}
+
+/* 핵심 역량 카드들 */
+.ab-strength-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+.ab-strength-card {
+  background: var(--white);
+  padding: 28px 28px;
+}
+.ab-strength-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  letter-spacing: -0.1px;
+  line-height: 1.3;
+}
+.ab-strength-body {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.85;
+}
+
+/* ── EDUCATION / CAREER 2컬럼 ── */
+.ab-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+
+.ab-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #2255ff;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ab-timeline { display: flex; flex-direction: column; gap: 28px; }
+
+.ab-timeline-item {}
+.ab-timeline-date {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #2255ff;
+  margin-bottom: 4px;
+}
+.ab-timeline-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.ab-timeline-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+}
+.ab-timeline-sub span {
+  display: block;
+}
+.ab-timeline-sub span::before { content: "- "; }
+
+/* ── TOOLS 섹션 ── */
+.ab-tools-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.ab-tools-group { display: flex; flex-direction: column; gap: 0; }
+.ab-tool-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ab-tool-row:first-child { border-top: 1px solid var(--border); }
+.ab-tool-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ab-tool-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #2255ff;
+  background: rgba(34,85,255,0.07);
+  padding: 2px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.ab-tool-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* AI 툴 태그들 */
+.ab-ai-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 0; }
+.ab-ai-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+}
+
+/* ── 이미지 팝업 ── */
+.img-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+.img-popup.open { display: flex; }
+
+.img-popup-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.img-popup-inner img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 4px;
+}
+
+.img-popup-close {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 36px; height: 36px;
+  background: var(--white);
+  border: none;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+  z-index: 10;
+}
+.img-popup-close:hover { background: var(--off); }
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .detail-body { grid-template-columns: 1fr; }
+  .detail-left { position:static; height:auto; border-right:none; border-bottom:1px solid var(--border); }
+  .detail-group { padding-left:24px; padding-right:24px; }
+  .ab-two-col { grid-template-columns: 1fr; gap: 48px; }
+  .ab-strength-grid { grid-template-columns: 1fr; }
+  .ab-profile-grid { grid-template-columns: 1fr; gap: 32px; }
+  .ab-tools-wrap { grid-template-columns: 1fr; gap: 36px; }
+  .ab-contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width:800px) {
+  .projects-grid { grid-template-columns:repeat(2,1fr); }
+  nav { gap:20px; padding:0 20px; }
+  .detail-nav-bar { padding:12px 20px; }
+  .detail-left { padding:36px 24px; }
+  .about-wrap { padding:40px 24px 72px; }
+}
+@media (max-width:560px) {
+  .projects-grid { grid-template-columns:1fr; }
+  .ab-strength-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <button class="nav-logo" onclick="activatePage('main')" style="color:#2255ff;opacity:1;font-weight:700;letter-spacing:0.08em;">BOYOUNG KIM</button>
+  <button class="nav-tab active" onclick="activatePage('main')">Main</button>
+  <button class="nav-tab"       onclick="activatePage('projects')">Projects</button>
+  <button class="nav-tab"       onclick="activatePage('about')">About</button>
+</nav>
+
+<!-- ══ PAGE: MAIN ══ -->
+<div id="page-main" class="page active">
+
+  <div class="main-identity">
+    <p class="main-name">BOYOUNG KIM</p>
+    <p class="main-role">Game Marketing Designer</p>
+  </div>
+  <span class="slide-counter"><span id="slideNum">01</span> / 06</span>
+
+  <div class="slideshow">
+    <div class="slide active">
+      <!-- 실제 이미지: <img src="slide1.jpg" class="slide-bg" alt=""> -->
+      <img src="main1.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">악마단 돌겨억</p><p class="slide-tag">로그라이크 디펜스 · 2025 - 2026</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main2.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">윈드러너</p><p class="slide-tag">러닝액션 / 방치형 RPG · 2019 - 2026</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main3.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">드래곤 꺼어억</p><p class="slide-tag">벽돌깨기 로그라이크 RPG · 2024 - 2025</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main4.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">Rise of Stars</p><p class="slide-tag">SLG · 2021 - 2023</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main5.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">맞고의신</p><p class="slide-tag">보드 · 2024 - 2025</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main6.jpg" class="slide-bg" alt="">
+      <div class="slide-info"><div><p class="slide-title">Star Wars: Starfighter Missions</p><p class="slide-tag">비행슈팅 · 2020 - 2021</p></div></div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ══ PAGE: PROJECTS ══ -->
+<div id="page-projects" class="page">
+  <div class="projects-grid">
+
+    <!-- 프로젝트 카드 1~6: onclick="openDetail(번호)" 으로 상세 페이지 열림 -->
+
+    <div class="project-item" onclick="openDetail(1)">
+      <div class="project-thumb">
+        <img src="proj1-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">악마단 돌겨억</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">악마단 돌겨억</p><p class="project-sub">로그라이크 디펜스 · 2025 - 2026</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(2)">
+      <div class="project-thumb">
+        <img src="proj2-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">윈드러너</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">윈드러너</p><p class="project-sub">러닝액션 / 방치형 RPG · 2019 - 2026</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(3)">
+      <div class="project-thumb">
+        <img src="proj3-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">드래곤 꺼어억</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">드래곤 꺼어억</p><p class="project-sub">벽돌깨기 로그라이크 RPG · 2024 - 2025</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(4)">
+      <div class="project-thumb">
+        <img src="proj4-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">Rise of Stars</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">Rise of Stars</p><p class="project-sub">SLG · 2021 - 2023</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(5)">
+      <div class="project-thumb">
+        <img src="proj5-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">맞고의신</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">맞고의신</p><p class="project-sub">보드 · 2024 - 2025</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(6)">
+      <div class="project-thumb">
+        <img src="proj6-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">Star Wars: Starfighter Missions</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">Star Wars: Starfighter Missions</p><p class="project-sub">비행슈팅 · 2020 - 2021</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ PAGE: PROJECT DETAIL ══ -->
+<div id="page-detail" class="page">
+
+  <!-- 얇은 뒤로가기 바 -->
+  <div class="detail-nav-bar">
+    <button class="detail-back" onclick="activatePage('projects')">
+      <svg viewBox="0 0 14 14"><path d="M10 7H4M4 7l3-3M4 7l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Projects
+    </button>
+    <span class="detail-breadcrumb">/ </span>
+    <span class="detail-breadcrumb-cur" id="detail-breadcrumb">프로젝트 이름</span>
+  </div>
+
+  <!-- 좌/우 2컬럼 본문 -->
+  <div class="detail-body">
+
+    <!-- 좌측: 텍스트 고정 패널 -->
+    <div class="detail-left">
+
+      <p class="detail-genre-tag" id="detail-genre">Game · Key Art · 2025</p>
+      <h1 class="detail-title" id="detail-title">프로젝트 이름</h1>
+
+      <div class="detail-divider"></div>
+
+      <!-- 게임 요약 -->
+      <div class="detail-text-block">
+        <p class="detail-text-label">Game Summary</p>
+        <p class="detail-text-body" id="detail-summary">게임 요약 설명이 들어갑니다.</p>
+      </div>
+
+      <!-- 디자인 전략 -->
+      <div class="detail-text-block">
+        <p class="detail-text-label">Design Strategy</p>
+        <p class="detail-text-body" id="detail-strategy">디자인 전략 설명이 들어갑니다.</p>
+      </div>
+
+      <div class="detail-divider"></div>
+
+      <!-- 메타 정보 -->
+      <div class="detail-meta-grid">
+        <div class="detail-meta-row">
+          <p class="detail-meta-label">제작연도</p>
+          <p class="detail-meta-val" id="detail-year">2025</p>
+        </div>
+        <div class="detail-meta-row">
+          <p class="detail-meta-label">작업 결과물</p>
+          <p class="detail-meta-val" id="detail-output">키아트 / 광고 배너 / SNS 포스터</p>
+        </div>
+        <div class="detail-meta-row">
+          <p class="detail-meta-label">디자인 참여도</p>
+          <p class="detail-meta-val" id="detail-contribution">기획 · 시안 · 최종 납품 100%</p>
+        </div>
+        <div class="detail-meta-row" id="detail-planning-row" style="display:none;">
+          <p class="detail-meta-label">기획 참여도</p>
+          <p class="detail-meta-val" id="detail-planning"></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 우측: 이미지 스크롤 패널 -->
+    <div class="detail-right">
+
+      <!-- 프로젝트 대표 메인 이미지 -->
+      <div class="detail-hero-img" id="detail-hero">
+        <div class="detail-img-ph">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>대표 이미지</span>
+        </div>
+      </div>
+
+      <!-- 이미지 그룹들 (JS로 채워짐) -->
+      <div class="detail-groups" id="detail-groups"></div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ PAGE: ABOUT ══ -->
+<div id="page-about" class="page">
+  <div class="about-wrap">
+
+    <!-- ── PROFILE ── -->
+    <div class="ab-section">
+      <div class="ab-profile-grid">
+        <div>
+          <p class="ab-name-ko">김 보 영</p>
+          <p class="ab-name-en">BOYOUNG KIM</p>
+          <div class="ab-contact-list">
+            <span class="ab-contact-item">1988.07.01</span>
+            <span class="ab-contact-item">+82 10 7679 6201</span>
+            <span class="ab-contact-item">bbolerom@naver.com</span>
+          </div>
+        </div>
+        <div>
+          <!-- 핵심 역량 카드 -->
+          <div class="ab-strength-grid">
+            <div class="ab-strength-card">
+              <p class="ab-strength-title">믿고 맡길 수 있는 든든한 디자이너</p>
+              <p class="ab-strength-body">빠르게 변화하는 게임 업계에서 한 곳에 7년 넘게 몸담았다는 것은 저에게 큰 자부심입니다. 이 숫자는 저의 성실함이자 어떤 상황에서도 프로젝트를 끝까지 책임진다는 저만의 약속입니다. 프로젝트의 시작부터 안정화 단계까지 묵묵히 제 자리를 지키며, 약속된 퀄리티와 기한을 지켜왔습니다.</p>
+            </div>
+            <div class="ab-strength-card">
+              <p class="ab-strength-title">어떤 장르든 찰떡같이 녹여내는 디자인</p>
+              <p class="ab-strength-body">캐주얼부터 우주 전략 시뮬레이션, 보드게임까지 정말 다양한 게임들을 다뤄왔습니다. 장르마다 유저가 좋아하는 포인트가 뭔지 정확히 짚어내서 클릭하고 싶게 만드는 비주얼을 만들어냅니다.</p>
+            </div>
+            <div class="ab-strength-card">
+              <p class="ab-strength-title">기획자의 마음을 읽는 소통</p>
+              <p class="ab-strength-body">저는 디자이너가 단순히 그림을 그리는 사람이 아니라 기획자의 언어를 시각적 언어로 '번역'하는 사람이라고 생각합니다. 마케터와 협업할 때 "개떡같이 말해도 찰떡같이 알아듣는다"는 말을 자주 들었습니다. 모호한 기획안에서도 핵심 소구 포인트를 찾아내어 클릭을 부르는 비주얼로 만들어냅니다.</p>
+            </div>
+            <div class="ab-strength-card">
+              <p class="ab-strength-title">경험의 깊이에 AI의 날개를 달다</p>
+              <p class="ab-strength-body">10년 차라는 경력에 안주하지 않고, 최근에는 AI 툴을 업무에 적극적으로 녹여내고 있습니다. AI 툴로 독창적인 컨셉의 에셋을 생성하고, 숙련된 디자인 감각으로 이를 실무 레벨까지 정교하게 다듬어냅니다. 단순 반복 작업이나 리소스 생성 시간을 확 줄여서 더 다양하고 퀄리티 높은 시안을 더 빠르게 뽑아낼 준비가 되어 있습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── EDUCATION + CAREER ── -->
+    <div class="ab-section">
+      <div class="ab-two-col">
+
+        <!-- Education -->
+        <div>
+          <p class="ab-col-title">Education<span style="color:#2255ff">.</span></p>
+          <div class="ab-timeline">
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2012.2</p>
+              <p class="ab-timeline-title">홍익대학교 커뮤니케이션 디자인 전공 졸업</p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2010.3 ~ 2010.12</p>
+              <p class="ab-timeline-title">캐나다 밴쿠버 어학연수</p>
+              <p class="ab-timeline-sub">
+                <span>ESL Course, Business English Course 수료</span>
+              </p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2007.3</p>
+              <p class="ab-timeline-title">홍익대학교(세종) 디자인 영상학부 입학</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Career -->
+        <div>
+          <p class="ab-col-title">Career<span style="color:#2255ff">.</span></p>
+          <div class="ab-timeline">
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2018.10 ~ 2026.4 (7년 5개월)</p>
+              <p class="ab-timeline-title">위메이드맥스(라이트컨), 마케팅 크리에이티브 디자이너, 정규직</p>
+              <p class="ab-timeline-sub">
+                <span>마케팅 크리에이티브, 마켓 이미지, 인게임 배너 제작</span>
+              </p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2017.1 ~ 2018.9 (1년 10개월)</p>
+              <p class="ab-timeline-title">트라이톤, 그래픽 디자이너, 정규직</p>
+              <p class="ab-timeline-sub">
+                <span>마켓 이미지, 인게임 배너 및 홍보 이미지 제작</span>
+              </p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2016.6 ~ 2016.12 (6개월)</p>
+              <p class="ab-timeline-title">서울디자인재단, 연구원, 계약직</p>
+              <p class="ab-timeline-sub">
+                <span>서울디자인재단 시민디자인 연구센터 연구지 편집 디자인</span>
+              </p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2014.12 ~ 2015.12 (1년 1개월)</p>
+              <p class="ab-timeline-title">032디자인, 편집 디자이너, 정규직</p>
+              <p class="ab-timeline-sub">
+                <span>인천 내 관공서 포스터, 브로슈어, 리플렛, 책자 편집 디자인</span>
+              </p>
+            </div>
+            <div class="ab-timeline-item">
+              <p class="ab-timeline-date">2012.12 ~ 2013.12 (1년)</p>
+              <p class="ab-timeline-title">FOREVER21(미국 본사), 이미지 리터쳐, 인턴</p>
+              <p class="ab-timeline-sub">
+                <span>공홈 이미지 리터칭, 프로모션 및 캠페인 배너 디자인 어시스트</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── GRAPHIC TOOLS + AI TOOLS 병렬 ── -->
+    <div class="ab-section">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+
+        <div>
+          <div class="ab-section-head">
+            <span class="ab-section-title">Graphic Tools<span>.</span></span>
+          </div>
+          <div class="ab-tools-group">
+            <div class="ab-tool-row">
+              <span class="ab-tool-name">Photoshop <span class="ab-tool-badge">Main</span></span>
+              <span class="ab-tool-cat">Image Editing</span>
+            </div>
+            <div class="ab-tool-row">
+              <span class="ab-tool-name">Illustrator <span class="ab-tool-badge">Main</span></span>
+              <span class="ab-tool-cat">Graphic Design</span>
+            </div>
+            <div class="ab-tool-row">
+              <span class="ab-tool-name">InDesign</span>
+              <span class="ab-tool-cat">Layout / Editorial</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="ab-section-head">
+            <span class="ab-section-title">AI Tools<span>.</span></span>
+          </div>
+          <div class="ab-ai-tags">
+            <span class="ab-ai-tag">Gemini (Nano Banana 2)</span>
+            <span class="ab-ai-tag">Claude AI</span>
+            <span class="ab-ai-tag">Freepik AI (멀티 AI 엔진)</span>
+            <span class="ab-ai-tag">Midjourney</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── 이미지 팝업 ──
+function openImgPopup(src) {
+  const popup = document.getElementById('imgPopup');
+  const popupImg = document.getElementById('imgPopupImg');
+  popupImg.src = src;
+  popup.classList.add('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const imgPopup      = document.getElementById('imgPopup');
+  const imgPopupClose = document.getElementById('imgPopupClose');
+  imgPopupClose.addEventListener('click', () => imgPopup.classList.remove('open'));
+  imgPopup.addEventListener('click', e => { if (e.target === imgPopup) imgPopup.classList.remove('open'); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') imgPopup.classList.remove('open'); });
+});
+/* ════════════════════════════════════════════════
+   프로젝트 데이터
+   ── 이 부분의 텍스트와 이미지 파일명만 바꾸면 됩니다 ──
+════════════════════════════════════════════════ */
+const projectData = {
+
+  1: {
+    genre:        "로그라이크 디펜스",
+    title:        "악마단 돌겨억",
+    summary:      "귀여운 악마단을 소환하여 적을 돌파하는 디펜스 장르로 전략, 협동, 운빨이 핵심인 타이틀",
+    strategy:     "캐릭터 비주얼 극대화, 트렌디한 밈 활용, 인플루언서 협업을 통한 신뢰도 확보로 크리에이티브 설계",
+    year:         "2025 - 2026",
+    output:       "UA / 커뮤니티 이미지 / 마켓 이미지",
+    contribution: "100% 1인 작업",
+    mainImg:      "detail1-main.jpg",
+    groups: [
+      {
+        name:   "캐릭터 비주얼 극대화 UA",
+        desc:   `<span class="desc-main">다채로운 속성과 능력을 가진 캐릭터들을 수집하고 성장시키는 재미를 강조한 UA 소재</span><span class="desc-sub">캐릭터별 비주얼 에셋의 전면 배치로 주목도 확보, 스킬 및 등급 정보를 통해 캐릭터 가치 전달, 고채도 배경과 이펙트를 활용해 클릭 유도</span>`,
+        images: ["proj1-g1-1.jpg", "proj1-g1-2.jpg", "proj1-g1-3.jpg", "proj1-g1-4.jpg", "proj1-g1-5.jpg"],
+      },
+      {
+        name:   "다양한 캐릭터의 대규모 군단 강조 UA",
+        desc:   `<span class="desc-main">다양한 캐릭터 조합을 강조하여 게임의 풍성한 콘텐츠를 시각화한 소재</span><span class="desc-sub">다수 캐릭터의 유기적 배치를 통해 시각적 풍성함 전달</span>`,
+        images: ["proj1-g2-1.jpg", "proj1-g2-2.jpg", "proj1-g2-3.jpg"],
+      },
+      {
+        name:   "밈 활용 및 공감 유도 UA",
+        desc:   `<span class="desc-main">SNS에서 유행하는 밈 콘텐츠를 게임 아이덴티티에 접목하여 유저의 공감을 끌어낸 소재</span><span class="desc-sub">대중적인 위트 있는 재해석을 통한 광고 거부감 최소화, 캐릭터와 밈의 유머러스한 결합</span>`,
+        images: ["proj1-g3-1.jpg", "proj1-g3-2.jpg", "proj1-g3-3.jpg", "proj1-g3-4.jpg"],
+      },
+      {
+        name:   "인플루언서 협업을 통한 신뢰 확보 UA",
+        desc:   `<span class="desc-main">인플루언서를 활용하여 유저의 심리적 진입 장벽을 낮추고, 게임의 흥행성을 시각적으로 증명한 소재</span><span class="desc-sub">인플루언서의 리액션과 핵심 플레이 화면의 결합으로 라이브감 전달, 캐릭터와 실사 인물의 조화로운 레이아웃 설계</span>`,
+        images: ["proj1-g4-1.jpg", "proj1-g4-2.jpg", "proj1-g4-3.jpg", "proj1-g4-4.jpg"],
+      },
+      {
+        name:   "0.5주년 기념 UA",
+        desc:   `<span class="desc-main">런칭 0.5주년을 맞아 대규모 보상과 이벤트를 알리고, 축제 분위기를 시각화하여 유저 유입을 극대화한 소재</span><span class="desc-sub">화려한 연출로 축제감 조성, '풍성한 보상' 등 핵심 혜택 강조</span><span class="desc-sub">데이터의 신뢰도를 높이는 랭킹 레이아웃 적용, 방대한 정보를 한눈에 파악할 수 있도록 직관적인 인포그래픽 구성</span>`,
+        images: ["proj1-g5-1.jpg", "proj1-g5-2.jpg", "proj1-g5-3.jpg", "proj1-g5-4.jpg", "proj1-g5-5.jpg"],
+      },
+      {
+        name:   "0.5주년 기념 인포그래픽 (커뮤니티용)",
+        desc:   `<span class="desc-main">런칭 후 6개월간 누적된 게임 데이터를 활용하여 게임의 대중성과 유저들의 뜨거운 참여도를 증명하고, 0.5주년 축제 분위기를 고조시킨 리포트형 소재</span><span class="desc-sub">성과 수치의 타이포그래피 강조를 통한 시각적 신뢰도 확보, 데이터 테마별 직관적인 비주얼 매칭</span>`,
+        images: ["proj1-g6-1.jpg", "proj1-g6-2.jpg", "proj1-g6-3.jpg", "proj1-g6-4.jpg", "proj1-g6-5.jpg", "proj1-g6-6.jpg", "proj1-g6-7.jpg"],
+      },
+      {
+        name:   "스토어 전환율 극대화를 위한 마켓 이미지",
+        desc:   `<span class="desc-main">100만+ 다운로드의 전면 배치로 사회적 증거 확보, 핵앤슬래시의 쾌감, 운빨, 전략적 덱 빌딩 배치, 핵심 UI 중심의 연출</span>`,
+        images: ["proj1-g7-1.png", "proj1-g7-2.png", "proj1-g7-3.png", "proj1-g7-4.png"],
+      },
+    ],
+  },
+
+  2: {
+    genre:        "러닝액션 / 방치형 RPG",
+    title:        "윈드러너",
+    summary:      "국민 러닝 게임 '윈드러너' IP를 활용하여 다양한 캐릭터와 소환수를 통해 속도감 있는 질주를 즐기는 캐주얼 액션 타이틀",
+    strategy:     "러닝 장르의 속도감 시각화, 고유의 아기자기한 화풍 강조, 방치형 RPG 확장성으로 다변화된 크리에이티브 설계",
+    year:         "2019 - 2026",
+    output:       "마켓 이미지, UA",
+    contribution: "100% 1인 작업",
+    planning:     "방치형 RPG 90%",
+    mainImg:      "detail2-main.jpg",
+    groups: [
+      {
+        name:   "윈드러너 Z (러닝액션)_마켓 이미지",
+        desc:   `<span class="desc-main">캐릭터의 속도감과 인게임 스크린샷으로 게임성을 강조한 마켓 이미지</span><span class="desc-sub">캐릭터의 속도감 넘치는 러닝 포즈를 전면에 배치하고 인게임 스크린샷을 결합하여 플레이 경험을 직관적으로 전달</span>`,
+        images: ["proj2-g1-1.png", "proj2-g1-2.png", "proj2-g1-3.png"],
+      },
+      {
+        name:   "윈드러너 키우기 (방치형 RPG)_힐링 UA",
+        desc:   `<span class="desc-main">다채로운 캐릭터와 힐링 감성을 강조한 UA</span><span class="desc-sub">개성 넘치는 캐릭터를 배치하여 유저들의 수집 욕구 자극</span><span class="desc-sub">동화 같은 화사한 파스텔 톤과 안락한 분위기를 통해 방치형 장르 특유의 '스트레스 없는 힐링 게임' 이미지 구축</span>`,
+        images: ["proj2-g3-1.jpg", "proj2-g3-2.jpg", "proj2-g3-3.jpg", "proj2-g3-4.jpg", "proj2-g3-5.jpg"],
+      },
+      {
+        name:   "윈드러너 키우기 (방치형 RPG)_성장 UA",
+        desc:   `<span class="desc-main">방치형 RPG의 핵심인 '무한 성장'과 '보상'을 시각화한 UA</span><span class="desc-sub">저레벨에서 고레벨로의 극적인 변화와 장비 장착 전후의 화려한 외형 대비를 강조하여 방치만으로도 압도적인 성장 속도와 강력한 보상의 쾌감을 표현</span>`,
+        images: ["proj2-g4-1.jpg", "proj2-g4-2.jpg"],
+      },
+    ],
+  },
+
+  3: {
+    genre:        "벽돌깨기 로그라이크 RPG",
+    title:        "드래곤 꺼어억",
+    summary:      "캐주얼 로그라이크 장르로 캐릭터 수집과 성장이 핵심인 타이틀",
+    strategy:     "타격감의 시각화, 캐릭터 집중 배치를 통한 주목도 확보, 트렌디한 밈 소재를 결합한 크리에이티브 설계",
+    year:         "2024 - 2025",
+    output:       "UA",
+    contribution: "100% 1인 작업",
+    mainImg:      "detail3-main.jpg",
+    groups: [
+      {
+        name:   "게임 컨셉 구체화 및 타격감 시각화 UA",
+        desc:   `<span class="desc-main">게임의 핵심 아이덴티티인 '트림 브레스' 컨셉을 유머러스하게 풀어내고, 타격감을 극대화하여 유저의 호기심을 자극하는 소재</span><span class="desc-sub">의성어의 시각화를 통한 직관적인 컨셉 전달, 브레스 이펙트를 활용한 압도적인 타격감 표현</span>`,
+        images: ["proj3-g1-1.jpg", "proj3-g1-2.jpg", "proj3-g1-3.jpg"],
+      },
+      {
+        name:   "캐릭터 중심의 비주얼 임팩트 및 수집 욕구 자극 UA",
+        desc:   `<span class="desc-main">개성 넘치는 드래곤 캐릭터들을 전면에 배치하여 비주얼을 강조하고, 유저의 수집 욕구를 직접적으로 타겟팅한 소재</span><span class="desc-sub">캐릭터 에셋의 강조를 통한 시선 집중, 직관적인 텍스트 배치를 활용한 캐릭터 아이덴티티 부각</span>`,
+        images: ["proj3-g2-1.jpg", "proj3-g2-2.jpg", "proj3-g2-3.jpg"],
+      },
+      {
+        name:   "트렌디한 밈을 결합한 유머러스 UA",
+        desc:   `<span class="desc-main">SNS의 트렌드 코드를 캐릭터에 맞춰 재해석하여 유저의 심리적 진입 장벽을 낮추고 공감을 유도한 소재</span><span class="desc-sub">캐릭터의 유머러스한 연출로 광고 피로도 최소화, 공감 키워드를 활용한 감성적 접근</span>`,
+        images: ["proj3-g3-1.jpg", "proj3-g3-2.jpg", "proj3-g3-3.jpg"],
+      },
+      {
+        name:   "기타 UA",
+        desc:   `<span class="desc-main"></span>`,
+        images: ["proj3-g4-1.jpg", "proj3-g4-2.jpg", "proj3-g4-3.jpg", "proj3-g4-4.jpg"],
+      },
+    ],
+  },
+
+  4: {
+    genre:        "SLG",
+    title:        "Rise of Stars",
+    summary:      "광활한 우주를 배경으로 자원 전쟁과 함대 전투를 즐기는 전략 시뮬레이션 타이틀",
+    strategy:     "메탈릭한 함대의 압도적 스케일 시각화, 실사풍 캐릭터 강조를 통해 글로벌 유저 소구력을 높임",
+    year:         "2021 - 2023",
+    output:       "UA",
+    contribution: "100% 1인 작업",
+    mainImg:      "detail4-main.jpg",
+    groups: [
+      {
+        name:   "우주 배경의 광활함, 메탈릭한 함대의 디테일을 극대화한 고퀄리티 비주얼 UA",
+        desc:   `<span class="desc-main">함대의 정교한 디테일과 게임의 핵심 콘텐츠를 강렬한 타이포그래피를 배치하여 압도적인 스케일과 긴장감 넘치는 분위기를 시각화한 소재</span>`,
+        images: ["proj4-g1-1.jpg"],
+        single: true,
+      },
+      {
+        name:   "실사풍 캐릭터 강조 및 수집 욕구 자극하는 UA",
+        desc:   `<span class="desc-main">세련된 실사풍 캐릭터들을 전면에 배치하여 게임의 거대한 스케일과 캐릭터 수집의 가치를 동시에 시각화한 소재</span>`,
+        images: ["proj4-g2-1.jpg", "proj4-g2-2.jpg", "proj4-g2-3.jpg", "proj4-g2-4.jpg", "proj4-g2-5.jpg"],
+      },
+    ],
+  },
+
+  5: {
+    genre:        "보드",
+    title:        "맞고의신",
+    summary:      "귀여운 캐릭터와 손맛 나는 타격감을 바탕으로 언제 어디서나 가볍게 즐길 수 있는 모바일 맞고 타이틀",
+    strategy:     "일상 공감형 상황 설정, 다양한 베리에이션을 통한 크리에이티브 설계",
+    year:         "2024 - 2025",
+    output:       "UA, 카카오 구좌",
+    contribution: "100% 1인 작업",
+    mainImg:      "detail5-main.jpg",
+    groups: [
+      {
+        name:   "일상 속 공감 상황과 밈을 결합한 UA",
+        desc:   `<span class="desc-main">친숙한 배경이나 유행하는 밈을 캐릭터의 대사에 녹여내어 캐주얼하고 재미있게 풀어낸 소재</span>`,
+        images: ["proj5-g1-1.jpg", "proj5-g1-2.jpg", "proj5-g1-3.jpg", "proj5-g1-4.jpg", "proj5-g1-5.jpg"],
+      },
+      {
+        name:   "카카오 구좌",
+        desc:   `<span class="desc-main"></span>`,
+        images: ["proj5-g2-1.jpg", "proj5-g2-2.jpg", "proj5-g2-3.jpg", "proj5-g2-4.jpg"],
+      },
+    ],
+  },
+
+  6: {
+    genre:        "비행슈팅",
+    title:        "Star Wars: Starfighter Missions",
+    summary:      "스타워즈 세계관을 배경으로 상징적인 스타파이터를 조종하며 박진감 넘치는 공중전을 즐기는 모바일 비행슈팅 타이틀",
+    strategy:     "두 진영의 기체 및 캐릭터의 대결구도 강조, 고퀄리티 비주얼 에셋을 활용하여 원작 IP의 정통성을 극대화",
+    year:         "2020 - 2021",
+    output:       "UA, 마켓 이미지",
+    contribution: "100% 1인 작업",
+    mainImg:      "detail6-main.jpg",
+    groups: [
+      {
+        name:   "진영 간 대립과 경쟁 강조 UA",
+        desc:   `<span class="desc-main">다스 베이더와 한 솔로 등 진영을 대표하는 상징적 캐릭터와 기체를 대칭으로 배치하여 대결의 긴장감을 조성하고, 타이포그래피를 결합해 신규 PvP 콘텐츠를 직관적으로 전달한 소재</span>`,
+        images: ["proj6-g1-1.jpg", "proj6-g1-2.jpg", "proj6-g1-3.jpg"],
+      },
+      {
+        name:   "스타워즈 IP의 상징적인 캐릭터와 기체 중심의 UA",
+        desc:   `<span class="desc-main">밀레니엄 팔콘, 타이 파이터 등 전설적인 스타파이터와 캐릭터 간의 배치를 통해 수집 욕구를 극대화한 소재</span>`,
+        images: ["proj6-g2-1.jpg", "proj6-g2-2.jpg", "proj6-g2-3.jpg", "proj6-g2-4.jpg"],
+      },
+      {
+        name:   "스타워즈 IP의 정통성과 비행 슈팅의 액션성을 결합한 마켓 이미지",
+        desc:   `<span class="desc-main">메인 키아트부터 전략적인 분대 구성, 기체 수집 및 강화, 그리고 실제 박진감 넘치는 전투 화면을 통해 게임의 핵심 재미 요소를 유저에게 직관적으로 전달</span>`,
+        images: ["proj6-g3-1.png", "proj6-g3-2.png", "proj6-g3-3.png", "proj6-g3-4.png"],
+      },
+    ],
+  },
+
+};
+
+/* ════════════════════════════════════════════
+   이 아래는 건드리지 않아도 됩니다
+════════════════════════════════════════════ */
+
+const phSVG = `<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#ddd" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>`;
+
+function openDetail(id) {
+  const d = projectData[id];
+
+  // 좌측 텍스트 채우기
+  document.getElementById('detail-breadcrumb').textContent  = d.title;
+  document.getElementById('detail-genre').textContent       = d.genre;
+  document.getElementById('detail-title').textContent       = d.title;
+  document.getElementById('detail-summary').textContent     = d.summary;
+  document.getElementById('detail-strategy').textContent    = d.strategy;
+  document.getElementById('detail-year').textContent        = d.year;
+  document.getElementById('detail-output').textContent      = d.output;
+  document.getElementById('detail-contribution').textContent = d.contribution;
+
+  // 기획 참여도_있을 때만 표시
+  const planningRow = document.getElementById('detail-planning-row');
+  const planningVal = document.getElementById('detail-planning');
+  if (d.planning) {
+    planningVal.textContent = d.planning;
+    planningRow.style.display = 'block';
+  } else {
+    planningRow.style.display = 'none';
+  }
+
+  // 우측 대표 메인 이미지
+  const hero = document.getElementById('detail-hero');
+  hero.innerHTML = d.mainImg
+    ? `<img src="${d.mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`
+    : `<div class="detail-img-ph">${phSVG}<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:#ccc;margin-top:6px">대표 이미지</span></div>`;
+
+  // 이미지 그룹들 생성
+  const groupsEl = document.getElementById('detail-groups');
+  groupsEl.innerHTML = '';
+
+  d.groups.forEach((g, gi) => {
+    const sec = document.createElement('div');
+    sec.className = 'detail-group';
+
+    // 그룹 설명 텍스트
+    sec.innerHTML = `
+      <div class="detail-group-desc-wrap">
+        <p class="detail-group-title">${g.name}</p>
+        <div class="detail-group-desc">${g.desc}</div>
+      </div>
+    `;
+
+
+    // single: true 이면 이미지 1개를 크게 표시
+    if (g.single && g.images.length === 1) {
+      const singleWrap = document.createElement('div');
+      singleWrap.style.cssText = 'width:100%;margin-bottom:32px;';
+      const src = g.images[0];
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src; img.alt = '';
+        img.style.cssText = 'width:100%;height:auto;display:block;cursor:pointer;';
+        img.addEventListener('click', () => openImgPopup(src));
+        singleWrap.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'detail-group-grid-ph';
+        ph.style.cssText = 'aspect-ratio:16/9;';
+        ph.innerHTML = `${phSVG}<span>이미지</span>`;
+        singleWrap.appendChild(ph);
+      }
+      sec.appendChild(singleWrap);
+      groupsEl.appendChild(sec);
+      return;
+    }
+
+    // 캐러셀_가운데 1개 완전히, 양옆 반씩
+    const slider = document.createElement('div');
+    slider.className = 'detail-group-slider';
+
+    const imgs = g.images;
+    let cur = 0;
+
+    // 이전 버튼 (이미지 왼쪽 밖)
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'slider-btn prev';
+    prevBtn.innerHTML = `<svg viewBox="0 0 14 14"><path d="M9 2L4 7l5 5"/></svg>`;
+
+    // 캐러셀 트랙
+    const carousel = document.createElement('div');
+    carousel.className = 'detail-group-carousel';
+    const track = document.createElement('div');
+    track.className = 'detail-group-carousel-track';
+
+    imgs.forEach((src, idx) => {
+      const item = document.createElement('div');
+      item.className = 'detail-group-carousel-item';
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src; img.alt = '';
+        img.addEventListener('click', () => openImgPopup(src));
+        item.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'detail-group-grid-ph';
+        ph.innerHTML = `${phSVG}<span>이미지 ${idx + 1}</span>`;
+        item.appendChild(ph);
+      }
+      track.appendChild(item);
+    });
+    carousel.appendChild(track);
+
+    // 다음 버튼 (이미지 오른쪽 밖)
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'slider-btn next';
+    nextBtn.innerHTML = `<svg viewBox="0 0 14 14"><path d="M5 2l5 5-5 5"/></svg>`;
+
+    // 카운터
+    const counter = document.createElement('div');
+    counter.className = 'slider-counter';
+
+    // 트랙 이동 함수
+    function moveTo(idx) {
+      cur = (idx + imgs.length) % imgs.length;
+      const itemW = carousel.offsetWidth * 0.60;
+      const sideGap = (carousel.offsetWidth - itemW) / 2;
+      const offset = cur * itemW - sideGap;
+      track.style.transform = cur === 0 ? 'translateX(0px)' : `translateX(-${offset}px)`;
+      counter.textContent = `${cur + 1} / ${imgs.length}`;
+    }
+
+    prevBtn.addEventListener('click', () => moveTo(cur - 1));
+    nextBtn.addEventListener('click', () => moveTo(cur + 1));
+
+    // flex 구조: [← 버튼] [캐러셀] [→ 버튼]
+    if (imgs.length > 1) {
+      slider.appendChild(prevBtn);
+    }
+    slider.appendChild(carousel);
+    if (imgs.length > 1) {
+      slider.appendChild(nextBtn);
+    }
+
+    const sliderWrap = document.createElement('div');
+    sliderWrap.appendChild(slider);
+    sliderWrap.appendChild(counter);
+
+    setTimeout(() => moveTo(0), 50);
+    sec.appendChild(sliderWrap);
+    groupsEl.appendChild(sec);
+  });
+
+  activatePage('detail');
+}
+
+// ── 페이지 라우팅 ──
+const navTabs = document.querySelectorAll('.nav-tab');
+
+function activatePage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+
+  // 상세 페이지일 때는 Projects 탭 활성화 유지
+  const tabId = id === 'detail' ? 'projects' : id;
+  navTabs.forEach((t, i) => {
+    t.classList.toggle('active', ['main','projects','about'][i] === tabId);
+  });
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 2);
+});
+
+// ── 슬라이드쇼 ──
+const slides = document.querySelectorAll('.slide');
+const numEl  = document.getElementById('slideNum');
+let cur = 0, timer;
+
+function goSlide(n) {
+  slides[cur].classList.remove('active');
+  cur = (n + slides.length) % slides.length;
+  slides[cur].classList.add('active');
+  numEl.textContent = String(cur + 1).padStart(2, '0');
+}
+
+function startTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => goSlide(cur + 1), 1800);
+}
+
+startTimer();
+</script>
+<!-- 이미지 팝업 -->
+<div class="img-popup" id="imgPopup">
+  <div class="img-popup-inner">
+    <button class="img-popup-close" id="imgPopupClose">✕</button>
+    <img id="imgPopupImg" src="" alt="">
+  </div>
+</div>
+
+</body>
+</html>

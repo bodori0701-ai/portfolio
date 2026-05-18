@@ -89,7 +89,7 @@ nav.scrolled { border-bottom-color: var(--border); }
   height: 100vh;
   overflow: hidden;
   position: relative;
-  background: #0a0a0a;
+  background: #000;
 }
 
 .slideshow { position: absolute; inset: 0; }
@@ -241,6 +241,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   display: flex;
   align-items: center;
   gap: 16px;
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 50;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .detail-back {
@@ -772,13 +778,44 @@ nav.scrolled { border-bottom-color: var(--border); }
 @media (max-width:800px) {
   .projects-grid { grid-template-columns:repeat(2,1fr); }
   nav { gap:20px; padding:0 20px; }
-  .detail-nav-bar { padding:12px 20px; }
+
+  /* 상세페이지 뒤로가기 바 sticky 고정 */
+  .detail-nav-bar {
+    padding:12px 20px;
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 50;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
   .detail-left { padding:36px 24px; }
   .about-wrap { padding:40px 24px 72px; }
+
+  /* 모바일 캐러셀: 이미지 1개씩 꽉차게 */
+  .detail-group-slider { width:100%; gap:8px; }
+  .detail-group-carousel-item { width:100%; padding:0; }
+  .detail-group-carousel-item img { height:auto; max-height:70vw; width:100%; object-fit:contain; }
 }
 @media (max-width:560px) {
   .projects-grid { grid-template-columns:1fr; }
   .ab-strength-grid { grid-template-columns: 1fr; }
+  .detail-group-carousel-item img { max-height:85vw; }
+}
+
+/* 세로형 이미지 분기: 절대위치로 겹치게 */
+.slide-bg-portrait,
+.slide-bg-landscape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.slide-bg-portrait { display:none; }
+.slide-bg-landscape { display:block; }
+@media (max-width:800px) {
+  .slide-bg-portrait { display:block; }
+  .slide-bg-landscape { display:none; }
 }
 </style>
 </head>
@@ -802,28 +839,34 @@ nav.scrolled { border-bottom-color: var(--border); }
 
   <div class="slideshow">
     <div class="slide active">
-      <!-- 실제 이미지: <img src="slide1.jpg" class="slide-bg" alt=""> -->
-      <img src="main1.jpg" class="slide-bg" alt="">
+      <!-- PC: main1.jpg (가로형) / 모바일: main1-mobile.jpg (세로형 1200x1500) -->
+      <img src="main1.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main1-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#1a0e2e;">
       <div class="slide-info"><div><p class="slide-title">악마단 돌겨억</p><p class="slide-tag">로그라이크 디펜스 · 2025 - 2026</p></div></div>
     </div>
     <div class="slide">
-      <img src="main2.jpg" class="slide-bg" alt="">
+      <img src="main2.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main2-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#a8d8ea;">
       <div class="slide-info"><div><p class="slide-title">윈드러너</p><p class="slide-tag">러닝액션 / 방치형 RPG · 2019 - 2026</p></div></div>
     </div>
     <div class="slide">
-      <img src="main3.jpg" class="slide-bg" alt="">
+      <img src="main3.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main3-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#1a0a08;">
       <div class="slide-info"><div><p class="slide-title">드래곤 꺼어억</p><p class="slide-tag">벽돌깨기 로그라이크 RPG · 2024 - 2025</p></div></div>
     </div>
     <div class="slide">
-      <img src="main4.jpg" class="slide-bg" alt="">
+      <img src="main4.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main4-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#0d1520;">
       <div class="slide-info"><div><p class="slide-title">Rise of Stars</p><p class="slide-tag">SLG · 2021 - 2023</p></div></div>
     </div>
     <div class="slide">
-      <img src="main5.jpg" class="slide-bg" alt="">
+      <img src="main5.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main5-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#1a0612;">
       <div class="slide-info"><div><p class="slide-title">맞고의신</p><p class="slide-tag">보드 · 2024 - 2025</p></div></div>
     </div>
     <div class="slide">
-      <img src="main6.jpg" class="slide-bg" alt="">
+      <img src="main6.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main6-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#08090f;">
       <div class="slide-info"><div><p class="slide-title">Star Wars: Starfighter Missions</p><p class="slide-tag">비행슈팅 · 2020 - 2021</p></div></div>
     </div>
   </div>
@@ -1482,10 +1525,11 @@ function openDetail(id) {
     // 트랙 이동 함수
     function moveTo(idx) {
       cur = (idx + imgs.length) % imgs.length;
-      const itemW = carousel.offsetWidth * 0.60;
-      const sideGap = (carousel.offsetWidth - itemW) / 2;
+      const isMobile = window.innerWidth <= 800;
+      const itemW = isMobile ? carousel.offsetWidth : carousel.offsetWidth * 0.60;
+      const sideGap = isMobile ? 0 : (carousel.offsetWidth - itemW) / 2;
       const offset = cur * itemW - sideGap;
-      track.style.transform = cur === 0 ? 'translateX(0px)' : `translateX(-${offset}px)`;
+      track.style.transform = (cur === 0 && !isMobile) ? 'translateX(0px)' : `translateX(-${offset}px)`;
       counter.textContent = `${cur + 1} / ${imgs.length}`;
     }
 

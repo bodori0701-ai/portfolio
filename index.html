@@ -392,6 +392,12 @@ nav.scrolled { border-bottom-color: var(--border); }
   position: relative;
 }
 .detail-hero-img img { width:100%; height:100%; object-fit:contain; display:block; background:#000; }
+.detail-hero-caption {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
 .detail-img-ph {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
@@ -1031,6 +1037,9 @@ nav.scrolled { border-bottom-color: var(--border); }
           <span>대표 이미지</span>
         </div>
       </div>
+      <div id="detail-hero-caption-area" style="display:none; text-align:right; padding: 8px 4px 0 0;">
+        <span class="detail-hero-caption">직접 제작한 이미지 소재를 기반으로 AI를 활용하여 연출한 영상입니다.</span>
+      </div>
 
       <!-- 이미지 그룹들 (JS로 채워짐) -->
       <div class="detail-groups" id="detail-groups"></div>
@@ -1224,6 +1233,7 @@ const projectData = {
     output:       "UA / 커뮤니티 이미지 / 마켓 이미지",
     contribution: "100% 1인 작업",
     mainImg:      "detail1-main.jpg",
+    mainVideo:    "detail1-main.webm",
     groups: [
       {
         name:   "캐릭터 비주얼 극대화 UA",
@@ -1273,6 +1283,7 @@ const projectData = {
     contribution: "100% 1인 작업",
     planning:     "방치형 RPG 90%",
     mainImg:      "detail2-main.jpg",
+    mainVideo:    "detail2-main.webm",
     groups: [
       {
         name:   "윈드러너 Z (러닝액션)_마켓 이미지",
@@ -1301,6 +1312,7 @@ const projectData = {
     output:       "UA",
     contribution: "100% 1인 작업",
     mainImg:      "detail3-main.jpg",
+    mainVideo:    "detail3-main.webm",
     groups: [
       {
         name:   "게임 컨셉 구체화 및 타격감 시각화 UA",
@@ -1334,6 +1346,7 @@ const projectData = {
     output:       "UA",
     contribution: "100% 1인 작업",
     mainImg:      "detail4-main.jpg",
+    mainVideo:    "detail4-main.webm",
     groups: [
       {
         name:   "우주 배경의 광활함, 메탈릭한 함대의 디테일을 극대화한 고퀄리티 비주얼 UA",
@@ -1358,6 +1371,7 @@ const projectData = {
     output:       "UA, 카카오 구좌",
     contribution: "100% 1인 작업",
     mainImg:      "detail5-main.jpg",
+    mainVideo:    "detail5-main.webm",
     groups: [
       {
         name:   "일상 속 공감 상황과 밈을 결합한 UA",
@@ -1381,6 +1395,7 @@ const projectData = {
     output:       "UA, 마켓 이미지",
     contribution: "100% 1인 작업",
     mainImg:      "detail6-main.jpg",
+    mainVideo:    "detail6-main.webm",
     groups: [
       {
         name:   "진영 간 대립과 경쟁 강조 UA",
@@ -1433,9 +1448,16 @@ function openDetail(id) {
 
   // 우측 대표 메인 이미지
   const hero = document.getElementById('detail-hero');
-  hero.innerHTML = d.mainImg
-    ? `<img src="${d.mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`
-    : `<div class="detail-img-ph">${phSVG}<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:#ccc;margin-top:6px">대표 이미지</span></div>`;
+  if (d.mainVideo) {
+    hero.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="${d.mainVideo}" type="video/webm"><source src="${d.mainImg}" type="video/mp4"></video>`;
+    document.getElementById('detail-hero-caption-area').style.display = 'block';
+  } else if (d.mainImg) {
+    hero.innerHTML = `<img src="${d.mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
+    document.getElementById('detail-hero-caption-area').style.display = 'none';
+  } else {
+    hero.innerHTML = `<div class="detail-img-ph">${phSVG}<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:#ccc;margin-top:6px">대표 이미지</span></div>`;
+    document.getElementById('detail-hero-caption-area').style.display = 'none';
+  }
 
   // 이미지 그룹들 생성
   const groupsEl = document.getElementById('detail-groups');

@@ -819,6 +819,7 @@ nav.scrolled { border-bottom-color: var(--border); }
   .projects-grid { grid-template-columns:1fr; }
   .ab-strength-grid { grid-template-columns: 1fr; }
   .detail-group-carousel-item img { max-height:85vw; }
+  .projects-section-divider { padding: 24px 0 16px; }
 }
 
 /* 세로형 이미지 분기: 절대위치로 겹치게 */
@@ -927,6 +928,44 @@ nav.scrolled { border-bottom-color: var(--border); }
   .career-wrap { padding: 40px 24px 80px; }
   .career-projects { grid-template-columns: 1fr; }
 }
+
+/* ── 스크롤 타입 상세페이지 ── */
+.detail-scroll-wrap {
+  padding: 48px 0 80px;
+}
+.detail-scroll-item {
+  width: 100%;
+  margin-bottom: 16px;
+}
+.detail-scroll-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.detail-scroll-item img:hover { opacity: 0.92; }
+
+/* ── Projects 섹션 구분선 ── */
+.projects-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 0 24px;
+}
+.projects-section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.projects-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -989,6 +1028,13 @@ nav.scrolled { border-bottom-color: var(--border); }
 
 <!-- ══ PAGE: PROJECTS ══ -->
 <div id="page-projects" class="page">
+
+  <div class="projects-section-divider">
+    <div class="projects-section-line"></div>
+    <span class="projects-section-label">Game Design</span>
+    <div class="projects-section-line"></div>
+  </div>
+
   <div class="projects-grid">
 
     <!-- 프로젝트 카드 1~6: onclick="openDetail(번호)" 으로 상세 페이지 열림 -->
@@ -1071,6 +1117,42 @@ nav.scrolled { border-bottom-color: var(--border); }
       </div>
     </div>
 
+  </div><!-- /projects-grid game -->
+
+  <div class="projects-section-divider">
+    <div class="projects-section-line"></div>
+    <span class="projects-section-label">Editorial Design</span>
+    <div class="projects-section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <div class="project-item" onclick="openDetail(7)">
+      <div class="project-thumb">
+        <img src="proj7-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">서울디자인나누기,<br>해외도시디자인 트렌드리포트</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">서울디자인나누기,<br>해외도시디자인 트렌드리포트</p><p class="project-sub">편집 디자인 · 2016</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(8)">
+      <div class="project-thumb">
+        <img src="proj8-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">북가북가 Book街 Book嘉</p>
+        </div>
+      </div>
+      <div class="project-info">
+        <div><p class="project-name">북가북가 Book街 Book嘉</p><p class="project-sub">편집 디자인 · 2015</p></div>
+        <span class="project-arrow">↗</span>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1129,6 +1211,10 @@ nav.scrolled { border-bottom-color: var(--border); }
         <div class="detail-meta-row" id="detail-planning-row" style="display:none;">
           <p class="detail-meta-label">기획 참여도</p>
           <p class="detail-meta-val" id="detail-planning"></p>
+        </div>
+        <div class="detail-meta-row" id="detail-client-row" style="display:none;">
+          <p class="detail-meta-label">Client</p>
+          <p class="detail-meta-val" id="detail-client"></p>
         </div>
       </div>
 
@@ -1691,6 +1777,46 @@ const projectData = {
     ],
   },
 
+  7: {
+    genre:        "편집 디자인",
+    title:        "서울디자인나누기,<br>해외도시디자인<br>트렌드리포트",
+    summary:      "서울디자인나누기: 서울의 미래 디자인 방향성과 스마트시티 비전을 정립하고, 도시 재생 및 시민 삶의 질 향상을 위한 디자인 연구 성과를 체계적으로 엮어낸 정책 연구 보고서\n\n해외도시디자인 트렌드리포트: 세계 주요 도시의 스마트 일상 트렌드와 글로벌 기관 인터뷰, 디자인 워크숍의 방대한 현장 데이터를 생생하고 일관성 있게 담아낸 해외 도시 디자인 트렌드 리포트",
+    strategy:     "200페이지가 넘는 방대한 텍스트 중심의 연구 자료를 직관적인 도식화와 심플하고 깔끔한 레이아웃을 통해 독자의 정보 가독성을 극대화",
+    year:         "2016",
+    output:       "서울디자인나누기 (182 × 257mm, 268p)\n해외도시디자인 트렌드리포트 (182 × 257mm, 248p)",
+    contribution: "리서치, 아이디어 스케치, 시안, 수정·보완, 최종 디자인",
+    mainImg:      "detail7-main.jpg",
+    aiVideo:      false,
+    type:         "scroll",
+    images: [
+      "detail7-1.jpg",
+      "detail7-2.jpg",
+      "detail7-3.jpg",
+      "detail7-4.jpg",
+      "detail7-5.jpg",
+    ],
+  },
+
+  8: {
+    genre:        "편집 디자인",
+    title:        "북가북가 Book街 Book嘉 책이 있어 즐거운 거리",
+    summary:      "'2015 인천 세계 책의 수도'를 기념하여 열린 특별 행사의 메인 포스터와 안내 리플렛 디자인",
+    strategy:     "책을 통해 확장되는 문화적 공간감과 축제의 활기찬 분위기를 시각화, 앞면은 주목도 높은 포스터로, 뒷면은 행사 일정을 체계적으로 담아낸 3단 접지 리플렛으로 구성하여 매체 활용도를 극대화",
+    year:         "2015",
+    output:       "포스터 겸 리플렛 (450 × 600mm, 3회 접지)",
+    contribution: "리서치, 아이디어 스케치, 시안, 수정·보완, 최종 디자인",
+    client:       "인천문화재단",
+    mainImg:      "detail8-main.jpg",
+    aiVideo:      false,
+    type:         "scroll",
+    images: [
+      "detail8-1.jpg",
+      "detail8-2.jpg",
+      "detail8-3.jpg",
+      "detail8-4.jpg",
+    ],
+  },
+
 };
 
 /* ════════════════════════════════════════════
@@ -1703,13 +1829,16 @@ function openDetail(id) {
   const d = projectData[id];
 
   // 좌측 텍스트 채우기
-  document.getElementById('detail-breadcrumb').textContent  = d.title;
+  document.getElementById('detail-breadcrumb').textContent  = d.title.replace(/<br>/g, ' ');
   document.getElementById('detail-genre').textContent       = d.genre;
-  document.getElementById('detail-title').textContent       = d.title;
-  document.getElementById('detail-summary').textContent     = d.summary;
+
+  // 타입에 따라 라벨 변경
+  document.querySelector('.detail-text-label').textContent = (d.type === 'scroll') ? 'Summary' : 'Game Summary';
+  document.getElementById('detail-title').innerHTML         = d.title;
+  document.getElementById('detail-summary').innerHTML      = d.summary.replace(/\n/g, '<br><br>');
   document.getElementById('detail-strategy').textContent    = d.strategy;
   document.getElementById('detail-year').textContent        = d.year;
-  document.getElementById('detail-output').textContent      = d.output;
+  document.getElementById('detail-output').innerHTML        = d.output.replace(/\n/g, '<br>');
   document.getElementById('detail-contribution').textContent = d.contribution;
 
   // 기획 참여도_있을 때만 표시
@@ -1722,11 +1851,20 @@ function openDetail(id) {
     planningRow.style.display = 'none';
   }
 
+  const clientRow = document.getElementById('detail-client-row');
+  const clientVal = document.getElementById('detail-client');
+  if (d.client) {
+    clientVal.textContent = d.client;
+    clientRow.style.display = 'block';
+  } else {
+    clientRow.style.display = 'none';
+  }
+
   // 우측 대표 메인 이미지
   const hero = document.getElementById('detail-hero');
   if (d.mainVideo) {
     hero.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="${d.mainVideo}" type="video/webm"><source src="${d.mainImg}" type="video/mp4"></video>`;
-    document.getElementById('detail-hero-caption-area').style.display = 'block';
+    document.getElementById('detail-hero-caption-area').style.display = (d.aiVideo === false) ? 'none' : 'block';
   } else if (d.mainImg) {
     hero.innerHTML = `<img src="${d.mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
     document.getElementById('detail-hero-caption-area').style.display = 'none';
@@ -1738,6 +1876,31 @@ function openDetail(id) {
   // 이미지 그룹들 생성
   const groupsEl = document.getElementById('detail-groups');
   groupsEl.innerHTML = '';
+
+  // ── scroll 타입: 이미지 1장씩 세로 나열 ──
+  if (d.type === 'scroll') {
+    const scrollWrap = document.createElement('div');
+    scrollWrap.className = 'detail-scroll-wrap';
+    (d.images || []).forEach(src => {
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'detail-scroll-item';
+      if (src) {
+        const img = document.createElement('img');
+        img.src = src; img.alt = '';
+        img.addEventListener('click', () => openImgPopup(src));
+        imgWrap.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'detail-group-grid-ph';
+        ph.innerHTML = `${phSVG}<span>이미지</span>`;
+        imgWrap.appendChild(ph);
+      }
+      scrollWrap.appendChild(imgWrap);
+    });
+    groupsEl.appendChild(scrollWrap);
+    activatePage('detail');
+    return;
+  }
 
   d.groups.forEach((g, gi) => {
     const sec = document.createElement('div');

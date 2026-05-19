@@ -37,7 +37,7 @@ nav {
   display: flex;
   align-items: center;
   padding: 0 36px;
-  gap: 32px;
+  gap: 0;
   z-index: 100;
   background: rgba(255,255,255,0.93);
   backdrop-filter: blur(10px);
@@ -58,9 +58,17 @@ nav.scrolled { border-bottom-color: var(--border); }
   margin-right: auto;
   opacity: 0.45;
   transition: opacity 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .nav-logo:hover { opacity: 1; }
 
+.nav-tabs-group {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+}
 .nav-tab {
   font-size: 16px;
   font-weight: 700;
@@ -73,6 +81,7 @@ nav.scrolled { border-bottom-color: var(--border); }
   cursor: pointer;
   background: none;
   font-family: 'Pretendard', sans-serif;
+  white-space: nowrap;
 }
 .nav-tab:hover { color: var(--text); }
 .nav-tab.active { color: #2255ff; border-bottom-color: #2255ff; font-weight: 700; }
@@ -783,7 +792,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 }
 @media (max-width:800px) {
   .projects-grid { grid-template-columns:repeat(2,1fr); }
-  nav { gap:20px; padding:0 20px; }
+  nav { padding:0 20px; }
 
   /* 상세페이지 뒤로가기 바 sticky 고정 */
   .detail-nav-bar {
@@ -921,10 +930,12 @@ nav.scrolled { border-bottom-color: var(--border); }
 
 <nav id="mainNav">
   <button class="nav-logo" onclick="activatePage('main')" style="color:#2255ff;opacity:1;font-weight:700;letter-spacing:0.08em;">BOYOUNG KIM</button>
-  <button class="nav-tab active" onclick="activatePage('main')">Main</button>
-  <button class="nav-tab"       onclick="activatePage('projects')">Projects</button>
-  <button class="nav-tab"       onclick="activatePage('about')">About</button>
-  <button class="nav-tab"       onclick="activatePage('career')">Career</button>
+  <div class="nav-tabs-group">
+    <button class="nav-tab active" onclick="activatePage('main')">Main</button>
+    <button class="nav-tab"       onclick="activatePage('projects')">Projects</button>
+    <button class="nav-tab"       onclick="activatePage('about')">About</button>
+    <button class="nav-tab"       onclick="activatePage('career')">Career</button>
+  </div>
 </nav>
 
 <!-- ══ PAGE: MAIN ══ -->

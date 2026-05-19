@@ -722,6 +722,17 @@ nav.scrolled { border-bottom-color: var(--border); }
   border: 1px solid var(--border);
   padding: 7px 14px;
 }
+.ab-tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+@media (max-width: 600px) {
+  .ab-tools-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
 
 /* ── 이미지 팝업 ── */
 .img-popup {
@@ -1162,7 +1173,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 
     <!-- ── GRAPHIC TOOLS + AI TOOLS 병렬 ── -->
     <div class="ab-section">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+      <div class="ab-tools-grid">
 
         <div>
           <div class="ab-section-head">

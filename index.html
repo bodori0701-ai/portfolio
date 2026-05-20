@@ -1781,7 +1781,7 @@ const projectData = {
   7: {
     genre:        "편집 디자인",
     title:        "서울디자인나누기,<br>해외도시디자인<br>트렌드리포트",
-    summary:      "서울디자인나누기: 서울의 미래 디자인 방향성과 스마트시티 비전을 정립하고, 도시 재생 및 시민 삶의 질 향상을 위한 디자인 연구 성과를 체계적으로 엮어낸 정책 연구 보고서\n\n해외도시디자인 트렌드리포트: 세계 주요 도시의 스마트 일상 트렌드와 글로벌 기관 인터뷰, 디자인 워크숍의 방대한 현장 데이터를 생생하고 일관성 있게 담아낸 해외 도시 디자인 트렌드 리포트",
+    summary:      "<strong>서울디자인나누기:</strong> 서울의 미래 디자인 방향성과 스마트시티 비전을 정립하고, 도시 재생 및 시민 삶의 질 향상을 위한 디자인 연구 성과를 체계적으로 엮어낸 정책 연구 보고서\n<strong>해외도시디자인 트렌드리포트:</strong> 세계 주요 도시의 스마트 일상 트렌드와 글로벌 기관 인터뷰, 디자인 워크숍의 방대한 현장 데이터를 생생하고 일관성 있게 담아낸 해외 도시 디자인 트렌드 리포트",
     strategy:     "200페이지가 넘는 방대한 텍스트 중심의 연구 자료를 직관적인 도식화와 심플하고 깔끔한 레이아웃을 통해 독자의 정보 가독성을 극대화",
     year:         "2016",
     output:       "서울디자인나누기 (182 × 257mm, 268p)\n해외도시디자인 트렌드리포트 (182 × 257mm, 248p)",
@@ -1837,7 +1837,7 @@ function openDetail(id) {
   // 타입에 따라 라벨 변경
   document.querySelector('.detail-text-label').textContent = (d.type === 'scroll') ? 'Summary' : 'Game Summary';
   document.getElementById('detail-title').innerHTML         = d.title;
-  document.getElementById('detail-summary').innerHTML      = d.summary.replace(/\n/g, '<br><br>');
+  document.getElementById('detail-summary').innerHTML      = d.summary.replace(/\n/g, '<br>');
   document.getElementById('detail-strategy').textContent    = d.strategy;
   document.getElementById('detail-year').textContent        = d.year;
   document.getElementById('detail-output').innerHTML        = d.output.replace(/\n/g, '<br>');

@@ -178,6 +178,13 @@ nav.scrolled { border-bottom-color: var(--border); }
   gap: 16px;
   padding: 16px 24px 24px;
 }
+/* 병원 마케팅 섹션: 프로젝트 2개 → 2열로 꽉 채움 */
+.projects-grid.grid-2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+.projects-grid.grid-2col .project-thumb {
+  aspect-ratio: 81/28; /* 27/14의 1.5배 가로 비율 → 다른 섹션과 높이 동일 */
+}
 .project-item {
   cursor: pointer;
   position: relative;
@@ -793,6 +800,8 @@ nav.scrolled { border-bottom-color: var(--border); }
 }
 @media (max-width:800px) {
   .projects-grid { grid-template-columns:repeat(2,1fr); }
+  /* 800px 이하에서는 모든 섹션이 2열이므로 병원 섹션도 기본 썸네일 비율로 복원 */
+  .projects-grid.grid-2col .project-thumb { aspect-ratio: 27/14; }
   nav { padding:0 16px; }
   .nav-logo { font-size: 12px; letter-spacing: 0.04em; }
   .nav-tabs-group { gap: 14px; }
@@ -988,10 +997,20 @@ nav.scrolled { border-bottom-color: var(--border); }
     <p class="main-name">BOYOUNG KIM</p>
     <p class="main-role">Game Marketing Designer</p>
   </div>
-  <span class="slide-counter"><span id="slideNum">01</span> / 10</span>
+  <span class="slide-counter"><span id="slideNum">01</span> / 11</span>
 
   <div class="slideshow">
     <div class="slide active">
+      <img src="main10.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main10-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
+      <div class="slide-info"><div><p class="slide-title">리뉴의원</p><p class="slide-tag">인스타그램 피드, 광고배너 2026</p></div></div>
+    </div>
+    <div class="slide">
+      <img src="main11.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main11-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
+      <div class="slide-info"><div><p class="slide-title">믿음정형외과의원</p><p class="slide-tag">인스타그램 피드, 옥외광고 · 2026</p></div></div>
+    </div>
+    <div class="slide">
       <!-- PC: main1.jpg (가로형) / 모바일: main1-mobile.jpg (세로형 1200x1500) -->
       <img src="main1.jpg"        class="slide-bg slide-bg-landscape" alt="">
       <img src="main1-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#1a0e2e;">
@@ -1037,16 +1056,6 @@ nav.scrolled { border-bottom-color: var(--border); }
       <img src="main9-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
       <div class="slide-info"><div><p class="slide-title">Poster Archive</p><p class="slide-tag">포스터 · 2015</p></div></div>
     </div>
-    <div class="slide">
-      <img src="main10.jpg"        class="slide-bg slide-bg-landscape" alt="">
-      <img src="main10-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
-      <div class="slide-info"><div><p class="slide-title">리뉴의원</p><p class="slide-tag">인스타그램 피드, 광고배너 2026</p></div></div>
-    </div>
-    <div class="slide">
-      <img src="main11.jpg"        class="slide-bg slide-bg-landscape" alt="">
-      <img src="main11-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
-      <div class="slide-info"><div><p class="slide-title">믿음정형외과의원</p><p class="slide-tag">인스타그램 피드, 옥외광고 · 2026</p></div></div>
-    </div>
   </div>
 
 
@@ -1054,6 +1063,32 @@ nav.scrolled { border-bottom-color: var(--border); }
 
 <!-- ══ PAGE: PROJECTS ══ -->
 <div id="page-projects" class="page">
+
+  <div class="projects-section-divider">
+    <div class="projects-section-line"></div>
+    <span class="projects-section-label">Medical Ad Design</span>
+    <div class="projects-section-line"></div>
+  </div>
+
+  <div class="projects-grid grid-2col">
+    <div class="project-item" onclick="openDetail(10)">
+      <div class="project-thumb">
+        <img src="sns1-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">리뉴의원</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(11)">
+      <div class="project-thumb">
+        <img src="sns2-default.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">믿음정형외과의원</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="projects-section-divider">
     <div class="projects-section-line"></div>
@@ -1193,32 +1228,6 @@ nav.scrolled { border-bottom-color: var(--border); }
     </div>
 
   </div><!-- /projects-grid editorial -->
-
-  <div class="projects-section-divider">
-    <div class="projects-section-line"></div>
-    <span class="projects-section-label">Medical Ad Design</span>
-    <div class="projects-section-line"></div>
-  </div>
-
-  <div class="projects-grid">
-    <div class="project-item" onclick="openDetail(10)">
-      <div class="project-thumb">
-        <img src="sns1-default.jpg" class="project-img default" alt="">
-        <div class="project-hover-overlay">
-          <p class="project-hover-title">리뉴의원</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="project-item" onclick="openDetail(11)">
-      <div class="project-thumb">
-        <img src="sns2-default.jpg" class="project-img default" alt="">
-        <div class="project-hover-overlay">
-          <p class="project-hover-title">믿음정형외과의원</p>
-        </div>
-      </div>
-    </div>
-  </div>
 
 </div>
 

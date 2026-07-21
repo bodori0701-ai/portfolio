@@ -111,6 +111,10 @@ nav.scrolled { border-bottom-color: var(--border); }
 }
 .slide.active { opacity: 1; }
 
+/* 한 슬라이드 안에서 여러 이미지 크로스페이드 */
+.slide[data-multi] .multi-img { position:absolute; inset:0; opacity:0; transition:opacity .6s ease; }
+.slide[data-multi] .multi-img.active { opacity:1; }
+
 .slide-bg { width:100%; height:100%; object-fit:contain; display:block; background:#000; }
 
 .slide-placeholder {
@@ -1000,14 +1004,22 @@ nav.scrolled { border-bottom-color: var(--border); }
   <span class="slide-counter"><span id="slideNum">01</span> / 11</span>
 
   <div class="slideshow">
-    <div class="slide active">
-      <img src="main10.jpg"        class="slide-bg slide-bg-landscape" alt="">
-      <img src="main10-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
+    <div class="slide active" data-multi="3">
+      <img src="main10-1.jpg"        class="slide-bg slide-bg-landscape multi-img active" data-idx="0" alt="">
+      <img src="main10-1-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img active" data-idx="0" alt="" style="object-fit:contain; background:#f0eee9;">
+      <img src="main10-2.jpg"        class="slide-bg slide-bg-landscape multi-img" data-idx="1" alt="">
+      <img src="main10-2-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img" data-idx="1" alt="" style="object-fit:contain; background:#f0eee9;">
+      <img src="main10-3.jpg"        class="slide-bg slide-bg-landscape multi-img" data-idx="2" alt="">
+      <img src="main10-3-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img" data-idx="2" alt="" style="object-fit:contain; background:#f0eee9;">
       <div class="slide-info"><div><p class="slide-title">리뉴의원</p><p class="slide-tag">인스타그램 피드, 광고배너 2026</p></div></div>
     </div>
-    <div class="slide">
-      <img src="main11.jpg"        class="slide-bg slide-bg-landscape" alt="">
-      <img src="main11-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
+    <div class="slide" data-multi="3">
+      <img src="main11-1.jpg"        class="slide-bg slide-bg-landscape multi-img active" data-idx="0" alt="">
+      <img src="main11-1-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img active" data-idx="0" alt="" style="object-fit:contain; background:#f0eee9;">
+      <img src="main11-2.jpg"        class="slide-bg slide-bg-landscape multi-img" data-idx="1" alt="">
+      <img src="main11-2-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img" data-idx="1" alt="" style="object-fit:contain; background:#f0eee9;">
+      <img src="main11-3.jpg"        class="slide-bg slide-bg-landscape multi-img" data-idx="2" alt="">
+      <img src="main11-3-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img" data-idx="2" alt="" style="object-fit:contain; background:#f0eee9;">
       <div class="slide-info"><div><p class="slide-title">믿음정형외과의원</p><p class="slide-tag">인스타그램 피드, 옥외광고 · 2026</p></div></div>
     </div>
     <div class="slide">
@@ -2172,18 +2184,42 @@ window.addEventListener('scroll', () => {
 // ── 슬라이드쇼 ──
 const slides = document.querySelectorAll('.slide');
 const numEl  = document.getElementById('slideNum');
-let cur = 0, timer;
+let cur = 0, timer, subIdx = 0;
+
+function slideSteps(slide) {
+  return parseInt(slide.getAttribute('data-multi') || '1', 10);
+}
+
+function showSub(slide, idx) {
+  slide.querySelectorAll('.multi-img').forEach(img => {
+    img.classList.toggle('active', parseInt(img.dataset.idx, 10) === idx);
+  });
+}
 
 function goSlide(n) {
   slides[cur].classList.remove('active');
   cur = (n + slides.length) % slides.length;
+  subIdx = 0;
   slides[cur].classList.add('active');
+  // 여러 이미지 슬라이드는 첫 장으로 리셋
+  if (slideSteps(slides[cur]) > 1) showSub(slides[cur], 0);
   numEl.textContent = String(cur + 1).padStart(2, '0');
+}
+
+function tick() {
+  const steps = slideSteps(slides[cur]);
+  // 현재 슬라이드에 이미지가 여러 장이고 아직 다 안 돌았으면, 텍스트·카운터 고정한 채 이미지만 전환
+  if (steps > 1 && subIdx < steps - 1) {
+    subIdx++;
+    showSub(slides[cur], subIdx);
+  } else {
+    goSlide(cur + 1);
+  }
 }
 
 function startTimer() {
   clearInterval(timer);
-  timer = setInterval(() => goSlide(cur + 1), 1800);
+  timer = setInterval(tick, 1800);
 }
 
 startTimer();

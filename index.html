@@ -1913,8 +1913,8 @@ const projectData = {
   10: {
     genre:        "병원 홍보 디자인",
     title:        "리뉴의원",
-    summary:      "가상의 피부과 브랜드 '리뉴의원'의 인지도 상승과 신규 고객 유입을 목적으로 기획·제작한 타겟 맞춤형 마케팅 콘텐츠",
-    strategy:     "시술별 타겟 니즈에 맞춰 톤앤매너를 차별화하고, 직관적인 그래픽과 명확한 정보를 전략적으로 배치하여 브랜드 신뢰도와 마케팅 효율을 극대화",
+    summary:      "트렌드에 민감한 뷰티/메디컬 소비자의 시선을 사로잡기 위해 기획된 피부과 가상 브랜드 마케팅 프로젝트. 타겟층의 니즈를 정확히 저격하는 프로모션 배너·팝업, SNS 피드, 오프라인 X배너까지 종합적인 마케팅 에셋을 기획·제작",
+    strategy:     "<strong>1. 신뢰감과 트렌디함의 밸런스</strong>\n의료 서비스 특유의 신뢰감을 주는 화이트·블루 톤에 뷰티 트렌디함을 더하는 화사한 파스텔톤과 핑크 그라데이션을 믹스하여 브랜드의 신뢰도와 호감도를 동시에 높임\n\n<strong>2. 정보의 직관적 시각화와 주목성 강화</strong>\n복잡한 시술 정보를 원형 인포그래픽과 단계별 아이콘으로 구조화하여 가독성을 극대화. 또한, 가격 정보와 혜택에 강렬한 컬러 포인트를 주어 클릭(CTA)을 유도하도록 설계\n\n<strong>3. 타겟 맞춤형 비주얼 소구</strong>\n예비 신부(예신) 대상 패키지, 프리미엄 리프팅, 시즌성 썸머 할인 이벤트 등 세분화된 타겟별 맞춤형 소구 포인트를 설정. 직관적인 텍스트와 매력적인 모델 컷을 조화시켜 시술의 필요성을 느끼도록 시각화",
     year:         "2026",
     output:       "인스타그램 피드, 광고 배너",
     contribution: "기획, 디자인 100% 1인 작업",
@@ -1933,8 +1933,8 @@ const projectData = {
   11: {
     genre:        "병원 홍보 디자인",
     title:        "믿음정형외과의원",
-    summary:      "가상으로 만든 정형외과의 인지도 상승과 환자 유입을 목적으로 기획·제작한 SNS 마케팅 콘텐츠",
-    strategy:     "신뢰감을 주는 블루 계열을 메인으로 하되 콘텐츠 성격(정보성, 이벤트성)에 맞는 서브 컬러를 전략적으로 매칭하여 주목도 향상",
+    summary:      "환자들에게 신뢰감을 전달하고, 병원의 주요 정보 및 진료 항목을 직관적으로 전달하기 위해 기획된 정형외과 브랜드 마케팅 프로젝트. 온·오프라인을 아우르는 종합 홍보 에셋을 기획·제작. 환자의 눈높이에 맞춘 명확한 정보 전달과 정돈된 의료 아이덴티티 구축에 초점을 맞춤",
+    strategy:     "<strong>1. 정형외과 전문성에 걸맞은 신뢰감 있는 톤앤매너</strong>\n환자에게 안정감을 주는 네이비 및 블루 컬러를 메인으로 활용하여 의료 서비스의 신뢰도와 전문성을 시각적으로 극대화\n\n<strong>2. 정보의 구조화와 높은 가독성</strong>\n휴진일 안내, 진료 시간, 이벤트 할인율 등 환자가 가장 먼저 확인해야 하는 핵심 정보를 시각적으로 두드러지게 배치. 복잡한 관절·척추 질환 정보와 증상은 아이콘과 단계별로 구조화하여 고령층을 포함한 모든 연령대가 쉽게 이해할 수 있도록 디자인\n\n<strong>3. 온·오프라인 매체 특성 맞춤형 확장성</strong>\n카드뉴스(정보형, 이벤트형)의 직관성과 대형 옥외광고의 주목성을 각각 고려하여 매체 특성에 최적화된 레이아웃을 구현",
     year:         "2026",
     output:       "인스타그램 피드, 옥외광고",
     contribution: "기획, 디자인 100% 1인 작업",
@@ -1968,7 +1968,7 @@ function openDetail(id) {
   document.querySelector('.detail-text-label').textContent = (d.type === 'scroll') ? 'Summary' : 'Game Summary';
   document.getElementById('detail-title').innerHTML         = d.title;
   document.getElementById('detail-summary').innerHTML      = d.summary.replace(/\n/g, '<br>');
-  document.getElementById('detail-strategy').textContent    = d.strategy;
+  document.getElementById('detail-strategy').innerHTML      = d.strategy.replace(/\n/g, '<br>');
   document.getElementById('detail-year').textContent        = d.year;
   document.getElementById('detail-output').innerHTML        = d.output.replace(/\n/g, '<br>');
   document.getElementById('detail-contribution').textContent = d.contribution;

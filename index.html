@@ -189,6 +189,31 @@ nav.scrolled { border-bottom-color: var(--border); }
 .projects-grid.grid-2col .project-thumb {
   aspect-ratio: 81/28; /* 27/14의 1.5배 가로 비율 → 다른 섹션과 높이 동일 */
 }
+/* 숏츠 카드 좌우 분할 호버 (조말론 / 딸기케이크) */
+.split-thumb { position: relative; }
+.split-zone { position: absolute; top: 0; bottom: 0; width: 50%; z-index: 10; }
+.split-zone.split-left  { left: 0; }
+.split-zone.split-right { right: 0; }
+.split-overlay {
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,0);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.3s ease;
+}
+.split-zone:hover .split-overlay { background: rgba(255,255,255,0.75); }
+.split-title {
+  font-size: clamp(14px, 1.8vw, 22px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  padding: 0 12px;
+}
+.split-zone:hover .split-title { opacity: 1; transform: translateY(0); }
+
 .project-item {
   cursor: pointer;
   position: relative;
@@ -275,8 +300,9 @@ nav.scrolled { border-bottom-color: var(--border); }
   gap: 7px;
   font-family: 'DM Mono', monospace;
   font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--muted);
+  color: #555;
   text-transform: uppercase;
   background: none;
   border: none;
@@ -285,7 +311,7 @@ nav.scrolled { border-bottom-color: var(--border); }
   transition: color 0.2s;
 }
 .detail-back:hover { color: var(--text); }
-.detail-back svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.5; }
+.detail-back svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; }
 
 .detail-breadcrumb {
   font-family: 'DM Mono', monospace;
@@ -943,6 +969,62 @@ nav.scrolled { border-bottom-color: var(--border); }
   .career-projects { grid-template-columns: 1fr; }
 }
 
+/* ── 숏츠 2편 나란히 보기 (클릭 시 재생) ── */
+.detail-shorts-pair-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  padding: 48px 0 80px;
+  flex-wrap: wrap;
+}
+.detail-shorts-item {
+  position: relative;
+  width: 320px;
+  max-width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+.detail-shorts-item img,
+.detail-shorts-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.detail-shorts-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.18);
+  transition: background 0.2s;
+}
+.detail-shorts-item:hover .detail-shorts-play { background: rgba(0,0,0,0.32); }
+.detail-shorts-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-shorts-play-btn svg { width: 20px; height: 20px; margin-left: 3px; }
+.detail-shorts-title {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 16px 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);
+}
+
 /* ── 스크롤 타입 상세페이지 ── */
 .detail-scroll-wrap {
   padding: 48px 0 80px;
@@ -1001,7 +1083,7 @@ nav.scrolled { border-bottom-color: var(--border); }
     <p class="main-name">BOYOUNG KIM</p>
     <p class="main-role">Game Marketing Designer</p>
   </div>
-  <span class="slide-counter"><span id="slideNum">01</span> / 11</span>
+  <span class="slide-counter"><span id="slideNum">01</span> / 12</span>
 
   <div class="slideshow">
     <div class="slide active" data-multi="3">
@@ -1021,6 +1103,12 @@ nav.scrolled { border-bottom-color: var(--border); }
       <img src="main11-3.jpg"        class="slide-bg slide-bg-landscape multi-img" data-idx="2" alt="">
       <img src="main11-3-mobile.jpg" class="slide-bg slide-bg-portrait  multi-img" data-idx="2" alt="" style="object-fit:contain; background:#f0eee9;">
       <div class="slide-info"><div><p class="slide-title">믿음정형외과의원</p><p class="slide-tag">인스타그램 피드, 유튜브 썸네일, 옥외광고 · 2026</p></div></div>
+    </div>
+    <div class="slide">
+      <!-- PC: main-shorts.jpg (가로형) / 모바일: main-shorts-mobile.jpg (세로형) -->
+      <img src="main-shorts.jpg"        class="slide-bg slide-bg-landscape" alt="">
+      <img src="main-shorts-mobile.jpg" class="slide-bg slide-bg-portrait"  alt="" style="object-fit:contain; background:#f0eee9;">
+      <div class="slide-info"><div><p class="slide-title">쇼츠 · 릴스</p><p class="slide-tag">2026</p></div></div>
     </div>
     <div class="slide">
       <!-- PC: main1.jpg (가로형) / 모바일: main1-mobile.jpg (세로형 1200x1500) -->
@@ -1097,6 +1185,35 @@ nav.scrolled { border-bottom-color: var(--border); }
         <img src="sns2-default.jpg" class="project-img default" alt="">
         <div class="project-hover-overlay">
           <p class="project-hover-title">믿음정형외과의원</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="projects-section-divider">
+    <div class="projects-section-line"></div>
+    <span class="projects-section-label">Shorts / Reels</span>
+    <div class="projects-section-line"></div>
+  </div>
+
+  <div class="projects-grid grid-2col">
+    <div class="project-item" onclick="openDetail(12)">
+      <div class="project-thumb">
+        <img src="shorts1.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">태닝키티 굿즈</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(13)">
+      <div class="project-thumb split-thumb">
+        <img src="shorts2.jpg" class="project-img default" alt="">
+        <div class="split-zone split-left">
+          <div class="split-overlay"><p class="split-title">조말론 홍보</p></div>
+        </div>
+        <div class="split-zone split-right">
+          <div class="split-overlay"><p class="split-title">딸기케이크 드로잉</p></div>
         </div>
       </div>
     </div>
@@ -1471,7 +1588,7 @@ nav.scrolled { border-bottom-color: var(--border); }
           <div class="ab-ai-tags">
             <span class="ab-ai-tag">Google AI</span>
             <span class="ab-ai-tag">Claude AI</span>
-            <span class="ab-ai-tag">Freepik AI (멀티 AI 엔진)</span>
+            <span class="ab-ai-tag">Magnific (멀티 AI 엔진)</span>
             <span class="ab-ai-tag">Midjourney</span>
           </div>
         </div>
@@ -1962,6 +2079,40 @@ const projectData = {
     ],
   },
 
+  12: {
+    genre:        "숏폼 콘텐츠",
+    title:        "태닝키티 굿즈",
+    summary:      "헬로키티 굿즈(배드민턴 키링, 여름 파우치)를 소개하는 숏폼 콘텐츠 2편. 제품의 디테일과 특징을 짧은 호흡으로 재미있게 전달하는 데 초점을 맞춤",
+    strategy:     "<strong>1. 캐릭터 중심의 비주얼 후킹</strong>\n헬로키티 캐릭터 자체를 전면에 내세워 스크롤을 멈추게 하는 영상\n\n<strong>2. 스토리텔링형 언박싱</strong>\n파우치를 탐색하는 핸드폰 화면 속 키티 키링으로 호기심을 유발하고, 키티가 한 마리씩 튀어나오며 각 캐릭터를 소개해 수집욕을 자극하는 영상",
+    year:         "2026",
+    output:       "숏폼 영상 2편",
+    contribution: "기획, 촬영, 편집 100% 1인 작업",
+    mainImg:      "shorts1.jpg",
+    aiVideo:      false,
+    type:         "shorts-pair",
+    videos: [
+      { cover: "shorts1-1.jpg", src: "shorts1-1.mp4", title: "배드민턴 치는 태닝키티" },
+      { cover: "shorts1-2.jpg", src: "shorts1-2.mp4", title: "여름 태닝키티 파우치" },
+    ],
+  },
+
+  13: {
+    genre:        "숏폼 콘텐츠",
+    title:        "조말론 홍보 & 딸기케이크 드로잉",
+    summary:      "조 말론 런던 향수 프로모션 숏폼과 일러스트 스케치에서 실사로 전환되는 딸기케이크 드로잉 숏폼 2편. 서로 다른 소재를 각각의 톤앤매너로 표현한 콘텐츠",
+    strategy:     "<strong>1. 브랜드 톤 유지 (조말론)</strong>\n화려한 장식 대신 꽃, 자연광 등 브랜드 이미지에 맞는 절제된 비주얼과 타이포그래피로 고급스러움 강조\n\n<strong>2. 단계적 전환 연출 (딸기케이크 드로잉)</strong>\n스케치 → 채색 → 실사 순으로 점진적으로 변화하는 장면을 이어 붙여 몰입감 있는 흐름 설계, 무거운 메시지 없이 '보는 재미'에 집중",
+    year:         "2026",
+    output:       "숏폼 영상 2편",
+    contribution: "기획, 편집 100% 1인 작업",
+    mainImg:      "shorts2.jpg",
+    aiVideo:      false,
+    type:         "shorts-pair",
+    videos: [
+      { cover: "shorts2-1.jpg", src: "shorts2-1.mp4", title: "조말론 홍보" },
+      { cover: "shorts3-1.jpg", src: "shorts3-1.mp4", title: "딸기케이크 드로잉" },
+    ],
+  },
+
 };
 
 /* ════════════════════════════════════════════
@@ -1978,7 +2129,7 @@ function openDetail(id) {
   document.getElementById('detail-genre').textContent       = d.genre;
 
   // 타입에 따라 라벨 변경
-  document.querySelector('.detail-text-label').textContent = (d.type === 'scroll') ? 'Summary' : 'Game Summary';
+  document.querySelector('.detail-text-label').textContent = (d.type === 'scroll' || d.type === 'shorts-pair') ? 'Summary' : 'Game Summary';
   document.getElementById('detail-title').innerHTML         = d.title;
   document.getElementById('detail-summary').innerHTML      = d.summary.replace(/\n/g, '<br>');
   document.getElementById('detail-strategy').innerHTML      = d.strategy.replace(/\n/g, '<br>');
@@ -2005,15 +2156,21 @@ function openDetail(id) {
     clientRow.style.display = 'none';
   }
 
-  // 우측 대표 메인 이미지
+  // 우측 대표 메인 이미지 (숏츠 상세페이지는 상단 대표 이미지 없이 바로 영상 2편으로 시작)
   const hero = document.getElementById('detail-hero');
-  if (d.mainVideo) {
+  if (d.type === 'shorts-pair') {
+    hero.style.display = 'none';
+    document.getElementById('detail-hero-caption-area').style.display = 'none';
+  } else if (d.mainVideo) {
+    hero.style.display = '';
     hero.innerHTML = `<video autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"><source src="${d.mainVideo}" type="video/webm"><source src="${d.mainImg}" type="video/mp4"></video>`;
     document.getElementById('detail-hero-caption-area').style.display = (d.aiVideo === false) ? 'none' : 'block';
   } else if (d.mainImg) {
+    hero.style.display = '';
     hero.innerHTML = `<img src="${d.mainImg}" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">`;
     document.getElementById('detail-hero-caption-area').style.display = 'none';
   } else {
+    hero.style.display = '';
     hero.innerHTML = `<div class="detail-img-ph">${phSVG}<span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.08em;color:#ccc;margin-top:6px">대표 이미지</span></div>`;
     document.getElementById('detail-hero-caption-area').style.display = 'none';
   }
@@ -2021,6 +2178,32 @@ function openDetail(id) {
   // 이미지 그룹들 생성
   const groupsEl = document.getElementById('detail-groups');
   groupsEl.innerHTML = '';
+
+  // ── shorts-pair 타입: 숏츠 영상 2편을 나란히, 클릭 시 재생 ──
+  if (d.type === 'shorts-pair') {
+    const pairWrap = document.createElement('div');
+    pairWrap.className = 'detail-shorts-pair-wrap';
+    (d.videos || []).forEach(v => {
+      const item = document.createElement('div');
+      item.className = 'detail-shorts-item';
+      item.innerHTML = `
+        <img src="${v.cover}" alt="">
+        <div class="detail-shorts-play">
+          <div class="detail-shorts-play-btn">
+            <svg viewBox="0 0 24 24" fill="#111"><polygon points="6,4 20,12 6,20"></polygon></svg>
+          </div>
+        </div>
+        <div class="detail-shorts-title">${v.title || ''}</div>
+      `;
+      item.addEventListener('click', () => {
+        item.innerHTML = `<video controls autoplay playsinline><source src="${v.src}" type="video/mp4">이 브라우저에서는 영상을 재생할 수 없어요.</video>`;
+      });
+      pairWrap.appendChild(item);
+    });
+    groupsEl.appendChild(pairWrap);
+    activatePage('detail');
+    return;
+  }
 
   // ── scroll 타입: 이미지 1장씩 세로 나열 ──
   if (d.type === 'scroll') {
@@ -2166,7 +2349,14 @@ function openDetail(id) {
 // ── 페이지 라우팅 ──
 const navTabs = document.querySelectorAll('.nav-tab');
 
+function stopShortsVideos() {
+  document.querySelectorAll('.detail-shorts-pair-wrap video').forEach(v => {
+    v.pause();
+  });
+}
+
 function activatePage(id) {
+  stopShortsVideos();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   window.scrollTo(0, 0);

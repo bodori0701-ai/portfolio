@@ -1196,7 +1196,7 @@ nav.scrolled { border-bottom-color: var(--border); }
     <div class="projects-section-line"></div>
   </div>
 
-  <div class="projects-grid grid-2col">
+  <div class="projects-grid">
     <div class="project-item" onclick="openDetail(12)">
       <div class="project-thumb">
         <img src="shorts1.jpg" class="project-img default" alt="">
@@ -1210,7 +1210,16 @@ nav.scrolled { border-bottom-color: var(--border); }
       <div class="project-thumb">
         <img src="shorts2.jpg" class="project-img default" alt="">
         <div class="project-hover-overlay">
-          <p class="project-hover-title">제품 홍보 & 딸기 케이크 드로잉</p>
+          <p class="project-hover-title">제품 홍보(조말론, 토리든)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item" onclick="openDetail(14)">
+      <div class="project-thumb">
+        <img src="shorts3.jpg" class="project-img default" alt="">
+        <div class="project-hover-overlay">
+          <p class="project-hover-title">딸기 케이크 드로잉&SUMMER 음료 3종</p>
         </div>
       </div>
     </div>
@@ -2095,11 +2104,11 @@ const projectData = {
 
   13: {
     genre:        "숏폼 콘텐츠",
-    title:        "제품 홍보 & 딸기 케이크 드로잉",
-    summary:      "조말론 향수와 토리든 세럼의 프로모션 숏폼. 일러스트 스케치에서 실사로 전환되는 딸기케이크 드로잉 숏폼. 서로 다른 소재를 각각의 톤앤매너로 표현한 콘텐츠. 개인 작업으로 진행",
-    strategy:     "<strong>1. 조말론 브랜드 톤 유지</strong>\n화려한 장식 대신 꽃, 자연광 등 브랜드 이미지에 맞는 절제된 비주얼과 타이포그래피로 고급스러움 강조\n\n<strong>2. DIVE IN의 임팩트 연출</strong>\n제품이 물속으로 빠져드는 역동적인 다이빙 모션을 통해 성분이 피부 깊숙이 빠르게 흡수되는 과정을 직관적인 비주얼로 시각화\n\n<strong>3. 단계적 전환 연출 (딸기케이크 드로잉)</strong>\n스케치 → 채색 → 실사 순으로 점진적으로 변화하는 장면을 이어 붙여 몰입감 있는 흐름 설계, 무거운 메시지 없이 '보는 재미'에 집중",
+    title:        "제품 홍보(조말론, 토리든)",
+    summary:      "조말론 향수와 토리든 세럼의 프로모션 숏폼. 각각의 톤앤매너로 표현한 콘텐츠. 개인 작업으로 진행",
+    strategy:     "<strong>1. 조말론 브랜드 톤 유지</strong>\n화려한 장식 대신 꽃, 자연광 등 브랜드 이미지에 맞는 절제된 비주얼과 타이포그래피로 고급스러움 강조\n\n<strong>2. DIVE IN의 임팩트 연출</strong>\n제품이 물속으로 빠져드는 역동적인 다이빙 모션을 통해 성분이 피부 깊숙이 빠르게 흡수되는 과정을 직관적인 비주얼로 시각화",
     year:         "2026",
-    output:       "숏폼 영상 3편",
+    output:       "숏폼 영상 2편",
     contribution: "기획, 편집 100% 1인 작업",
     mainImg:      "shorts2.jpg",
     aiVideo:      false,
@@ -2107,7 +2116,23 @@ const projectData = {
     videos: [
       { cover: "shorts2-1.jpg", src: "shorts2-1.mp4", title: "조말론 향수 홍보" },
       { cover: "shorts4-1.jpg", src: "shorts4-1.mp4", title: "토리든 세럼 홍보" },
+    ],
+  },
+
+  14: {
+    genre:        "숏폼 콘텐츠",
+    title:        "딸기 케이크 드로잉&SUMMER 음료 3종",
+    summary:      "일러스트 스케치에서 실사로 전환되는 딸기케이크 드로잉과 여름 시즌 음료 3종의 청량함을 직관적으로 전달하기 위해 기획된 숏폼 2편. 개인 작업으로 진행",
+    strategy:     "<strong>1. 단계적 전환 연출 (딸기케이크 드로잉)</strong>\n스케치 → 채색 → 실사 순으로 점진적으로 변화하는 장면을 이어 붙여 몰입감 있는 흐름 설계, 무거운 메시지 없이 '보는 재미'에 집중\n\n<strong>2. 인터랙티브 리모컨 연출 (SUMMER 음료 3종)</strong>\n리모컨을 누르는 모션을 통해 메뉴가 하나씩 켜지는 시각적 연출을 구현. 이를 '버튼 ON'과 '스위치 ON'의 중의적 의미를 담은 메인 카피 'SUMMER ON'으로 표현함",
+    year:         "2026",
+    output:       "숏폼 영상 2편",
+    contribution: "기획, 편집 100% 1인 작업",
+    mainImg:      "shorts3.jpg",
+    aiVideo:      false,
+    type:         "shorts-pair",
+    videos: [
       { cover: "shorts3-1.jpg", src: "shorts3-1.mp4", title: "딸기케이크 드로잉" },
+      { cover: "shorts5-1.jpg", src: "shorts5-1.mp4", title: "SUMMER 음료 3종" },
     ],
   },
 
